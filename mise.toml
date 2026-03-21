@@ -1,0 +1,27 @@
+[tasks.dev]
+run = "composer dev"
+description = "Start development server with all services"
+
+[tasks.test]
+run = "composer test"
+description = "Run Pest tests"
+
+[tasks.analyse]
+run = "vendor/bin/phpstan analyse"
+description = "Run PHPStan analysis"
+
+[tasks.format]
+run = "vendor/bin/pint"
+description = "Run Laravel Pint"
+
+[tasks.rector]
+run = "vendor/bin/rector process --dry-run"
+description = "Preview Rector changes"
+
+[tasks."rector:fix"]
+run = "vendor/bin/rector process"
+description = "Apply Rector changes"
+
+[tasks.ide]
+run = "php artisan ide-helper:generate && php artisan ide-helper:models -N && php artisan ide-helper:meta"
+description = "Generate IDE helpers"
