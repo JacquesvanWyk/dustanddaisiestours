@@ -46,11 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Parallax on hero images
     document.querySelectorAll('[x-ref^="slide-"] img').forEach((img) => {
+        const section = img.closest('section');
+        if (!section) return;
         gsap.to(img, {
             y: 80,
             ease: 'none',
             scrollTrigger: {
-                trigger: img.closest('section'),
+                trigger: section,
                 start: 'top top',
                 end: 'bottom top',
                 scrub: 1,

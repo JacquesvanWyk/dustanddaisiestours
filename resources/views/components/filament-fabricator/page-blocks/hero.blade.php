@@ -25,7 +25,7 @@
         if (this.total > 1) {
             this.auto = setInterval(() => this.next(), 6000);
         }
-        this.$nextTick(() => this.animateSlide());
+        this.$nextTick(() => this.animateSlide(0));
     },
     next() {
         if (this.transitioning) return;
@@ -49,7 +49,7 @@
         const nextContent = nextSlide?.querySelector('.hero-content');
 
         // Fade out current
-        if (typeof gsap !== 'undefined') {
+        if (typeof gsap !== 'undefined' && currentSlide && nextSlide) {
             gsap.to(currentContent, { opacity: 0, y: 30, duration: 0.4, ease: 'power2.in' });
             gsap.to(currentSlide, {
                 opacity: 0, scale: 1.05, duration: 0.8, ease: 'power2.inOut',
@@ -74,14 +74,20 @@
             this.auto = setInterval(() => this.next(), 6000);
         }
     },
-    animateSlide() {
+    animateSlide(retries = 0) {
         const slide = this.$refs['slide-' + this.current];
         const content = slide?.querySelector('.hero-content');
-        if (typeof gsap !== 'undefined' && content) {
-            gsap.fromTo(content.querySelector('.hero-subheading'), { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.8, delay: 0.2, ease: 'power3.out' });
-            gsap.fromTo(content.querySelector('.hero-heading'), { opacity: 0, y: 60, clipPath: 'inset(100% 0 0 0)' }, { opacity: 1, y: 0, clipPath: 'inset(0% 0 0 0)', duration: 1, delay: 0.4, ease: 'power3.out' });
-            gsap.fromTo(content.querySelector('.hero-cta'), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, delay: 0.9, ease: 'power2.out' });
+        if (!content) return;
+        if (typeof gsap === 'undefined') {
+            if (retries < 10) setTimeout(() => this.animateSlide(retries + 1), 100);
+            return;
         }
+        const subheading = content.querySelector('.hero-subheading');
+        const heading = content.querySelector('.hero-heading');
+        const cta = content.querySelector('.hero-cta');
+        if (subheading) gsap.fromTo(subheading, { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.8, delay: 0.2, ease: 'power3.out' });
+        if (heading) gsap.fromTo(heading, { opacity: 0, y: 60, clipPath: 'inset(100% 0 0 0)' }, { opacity: 1, y: 0, clipPath: 'inset(0% 0 0 0)', duration: 1, delay: 0.4, ease: 'power3.out' });
+        if (cta) gsap.fromTo(cta, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, delay: 0.9, ease: 'power2.out' });
     }
 }" @keydown.right.window="next()" @keydown.left.window="prev()">
 
