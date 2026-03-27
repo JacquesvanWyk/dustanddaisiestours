@@ -9,7 +9,7 @@
     };
 @endphp
 
-<section class="{{ $bgClasses }} relative overflow-hidden">
+<section class="torn-top torn-bottom {{ $bgClasses }} bg-footprints relative overflow-hidden">
     <div class="absolute inset-0 bg-grain pointer-events-none"></div>
     <div class="max-w-4xl mx-auto px-6 py-28 text-center relative z-10">
         @if($subheading ?? null)

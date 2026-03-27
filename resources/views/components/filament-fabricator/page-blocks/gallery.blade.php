@@ -1,6 +1,6 @@
 @aware(['page'])
 
-<section class="bg-sand py-24" x-data="{
+<section class="bg-sand py-24 bg-topo" x-data="{
     open: false,
     current: 0,
     images: {{ Js::from(collect($images ?? [])->filter(fn($i) => $i['image'] ?? null)->values()) }},
@@ -24,7 +24,8 @@
                 @foreach($images as $i => $item)
                     @php $src = $item['image'] ?? null; @endphp
                     @if($src)
-                        <div class="break-inside-avoid gallery-item" @click="show({{ $i }})">
+                        @php $tilts = ['photo-tilt-left', 'photo-tilt-right', 'photo-tilt-slight']; @endphp
+                        <div class="break-inside-avoid gallery-item washi-tape {{ $tilts[$i % 3] }}" @click="show({{ $i }})">
                             <img src="{{ Storage::url($src) }}"
                                  alt="{{ $item['alt'] ?? 'Gallery image ' . ($i + 1) }}"
                                  class="w-full object-cover"

@@ -1,7 +1,7 @@
 @aware(['page'])
 
-<section class="bg-sand py-24 bg-topo">
-    <div class="max-w-7xl mx-auto px-6">
+<section class="bg-sand-dark py-24 bg-daisies relative">
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
         @if($heading ?? null)
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-5xl font-bold">{{ $heading }}</h2>
@@ -27,11 +27,13 @@
                         $cleanDesc = preg_replace('/\s*Distance:.*$/i', '', $desc);
                         $cleanDesc = preg_replace('/\s*Duration:.*$/i', '', $cleanDesc);
                         $cleanDesc = rtrim($cleanDesc, '. ,');
+
+                        $tilts = ['photo-tilt-right', 'photo-tilt-left', 'photo-tilt-slight', 'photo-tilt-right'];
                     @endphp
                     <a href="{{ $card['link'] ?? '#' }}" class="tour-card group block">
                         @if($card['image'] ?? null)
-                            <div class="overflow-hidden aspect-[4/5]">
-                                <img src="{{ Storage::url($card['image']) }}" alt="{{ $cleanTitle }}" class="w-full h-full object-cover">
+                            <div class="overflow-hidden aspect-[4/5] washi-tape">
+                                <img src="{{ Storage::url($card['image']) }}" alt="{{ $cleanTitle }}" class="w-full h-full object-cover journal-photo">
                             </div>
                         @endif
                         <div class="p-6">
@@ -52,7 +54,7 @@
                                     @endif
                                     @if($distance)
                                         <span class="tour-meta">
-                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
                                             {{ $distance }}
                                         </span>
                                     @endif

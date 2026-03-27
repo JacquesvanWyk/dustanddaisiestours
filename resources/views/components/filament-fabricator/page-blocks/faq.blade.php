@@ -1,6 +1,6 @@
 @aware(['page'])
 
-<section class="bg-sand py-24">
+<section class="bg-sand py-24 bg-topo">
     <div class="max-w-3xl mx-auto px-6">
         @if($heading ?? null)
             <div class="text-center mb-16">
@@ -10,7 +10,7 @@
             </div>
         @endif
         @if($items ?? null)
-            <div class="space-y-0">
+            <div class="margin-line pl-8 ruled-bg">
                 @foreach($items as $i => $item)
                     <div x-data="{ open: false }" class="faq-item py-6">
                         <button @click="open = !open" class="w-full flex justify-between items-center text-left gap-4">

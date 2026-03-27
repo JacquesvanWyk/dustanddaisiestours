@@ -1,6 +1,6 @@
 @aware(['page'])
 
-<section class="bg-sand-dark py-24">
+<section class="bg-sand-dark py-24 bg-daisies">
     <div class="max-w-5xl mx-auto px-6">
         @if($heading ?? null)
             <div class="text-center mb-16">
@@ -15,27 +15,27 @@
         @endif
 
         <div class="grid md:grid-cols-5 gap-16">
-            <div class="md:col-span-2 space-y-8">
+            <div class="md:col-span-2 margin-line pl-6 ruled-bg space-y-8">
                 @if($phone = App\Models\SiteSetting::get('phone'))
                     <div>
-                        <p class="text-xs uppercase tracking-[0.15em] text-earth mb-1 font-semibold">Phone</p>
+                        <p class="font-accent text-xl text-brand mb-1">Phone</p>
                         <a href="tel:{{ preg_replace('/\s+/', '', $phone) }}" class="text-lg hover:text-brand transition">{{ $phone }}</a>
                     </div>
                 @endif
                 @if($phone2 = App\Models\SiteSetting::get('phone_2'))
                     <div>
-                        <p class="text-xs uppercase tracking-[0.15em] text-earth mb-1 font-semibold">Phone 2</p>
+                        <p class="font-accent text-xl text-brand mb-1">Phone 2</p>
                         <a href="tel:{{ preg_replace('/\s+/', '', $phone2) }}" class="text-lg hover:text-brand transition">{{ $phone2 }}</a>
                     </div>
                 @endif
                 @if($email = App\Models\SiteSetting::get('email'))
                     <div>
-                        <p class="text-xs uppercase tracking-[0.15em] text-earth mb-1 font-semibold">Email</p>
+                        <p class="font-accent text-xl text-brand mb-1">Email</p>
                         <a href="mailto:{{ $email }}" class="text-lg hover:text-brand transition">{{ $email }}</a>
                     </div>
                 @endif
                 <div>
-                    <p class="text-xs uppercase tracking-[0.15em] text-earth mb-1 font-semibold">Location</p>
+                    <p class="font-accent text-xl text-brand mb-1">Location</p>
                     <p class="text-lg">Springbok, Northern Cape</p>
                 </div>
             </div>
