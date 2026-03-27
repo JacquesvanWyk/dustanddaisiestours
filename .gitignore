@@ -22,3 +22,8 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+.ai/
+.claude/hooks/
+.claude/agent-memory/
+.claude/agent-memory-local/
+.claude/settings.local.json

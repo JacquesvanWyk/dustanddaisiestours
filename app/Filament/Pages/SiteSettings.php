@@ -37,12 +37,15 @@ class SiteSettings extends Page implements HasForms
         return $form
             ->schema([
                 TextInput::make('site_name')->label('Site Name')->required(),
+                TextInput::make('tagline'),
                 FileUpload::make('logo')->image()->directory('branding'),
-                TextInput::make('phone')->tel(),
+                TextInput::make('phone')->tel()->label('Phone (Elmarie)'),
+                TextInput::make('phone_2')->tel()->label('Phone 2 (Nicky)'),
                 TextInput::make('email')->email(),
                 Textarea::make('address')->rows(3),
                 TextInput::make('facebook_url')->label('Facebook URL')->url(),
                 TextInput::make('instagram_url')->label('Instagram URL')->url(),
+                Textarea::make('whatsapp_note')->label('WhatsApp Note')->rows(2),
             ])
             ->statePath('data');
     }

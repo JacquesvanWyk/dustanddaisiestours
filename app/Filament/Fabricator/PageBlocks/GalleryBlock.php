@@ -4,6 +4,7 @@ namespace App\Filament\Fabricator\PageBlocks;
 
 use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Z3d0X\FilamentFabricator\PageBlocks\PageBlock;
 
@@ -16,11 +17,19 @@ class GalleryBlock extends PageBlock
         return $block
             ->schema([
                 TextInput::make('heading'),
-                FileUpload::make('images')
-                    ->image()
-                    ->multiple()
+                Repeater::make('images')
+                    ->schema([
+                        FileUpload::make('image')
+                            ->image()
+                            ->required()
+                            ->directory('gallery'),
+                        TextInput::make('alt')
+                            ->label('Alt text'),
+                        TextInput::make('caption'),
+                    ])
                     ->reorderable()
-                    ->directory('gallery'),
+                    ->collapsible()
+                    ->defaultItems(0),
             ]);
     }
 }

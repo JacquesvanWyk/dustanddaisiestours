@@ -2,29 +2,25 @@
 
 @php
     $bgClasses = match($background_color ?? 'orange') {
-        'orange' => 'bg-[#E87524] text-white',
-        'dark' => 'bg-gray-900 text-white',
-        'gray' => 'bg-gray-100 text-gray-900',
-        default => 'bg-white text-gray-900',
+        'dark' => 'bg-ink text-parchment',
+        'gray' => 'bg-parchment-dark text-ink',
+        'white' => 'bg-parchment text-ink',
+        default => 'bg-brand text-parchment',
     };
     $btnClasses = match($background_color ?? 'orange') {
-        'orange' => 'bg-white text-[#E87524] hover:bg-gray-100',
-        'dark' => 'bg-[#E87524] text-white hover:bg-[#d4691f]',
-        default => 'bg-[#E87524] text-white hover:bg-[#d4691f]',
+        'dark' => 'border-parchment text-parchment hover:bg-parchment hover:text-ink',
+        default => 'border-ink text-ink hover:bg-ink hover:text-parchment',
     };
 @endphp
 
-<section class="{{ $bgClasses }} py-20">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold">{{ $heading }}</h2>
-
+<section class="torn-top torn-bottom {{ $bgClasses }}">
+    <div class="max-w-3xl mx-auto px-4 py-28 text-center">
         @if($subheading ?? null)
-            <p class="mt-4 text-lg opacity-90 max-w-2xl mx-auto">{{ $subheading }}</p>
+            <p class="font-handwriting text-2xl mb-2">{{ $subheading }}</p>
         @endif
-
-        <a href="{{ $button_link }}"
-           class="mt-8 inline-block px-8 py-3 font-semibold rounded-lg transition-colors {{ $btnClasses }}">
-            {{ $button_text }}
-        </a>
+        <h2 class="text-3xl md:text-5xl font-bold mb-8">{{ $heading ?? '' }}</h2>
+        @if($button_text ?? null)
+            <a href="{{ $button_link ?? '#' }}" class="btn-stamp text-sm {{ $btnClasses }}">{{ $button_text }}</a>
+        @endif
     </div>
 </section>

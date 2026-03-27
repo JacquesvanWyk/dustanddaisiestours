@@ -6,6 +6,164 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Source Serif 4', Georgia, serif;
+    --font-heading: 'Playfair Display', serif;
+    --font-handwriting: 'Caveat', cursive;
+    --color-brand: #E87524;
+    --color-parchment: #F5F0E8;
+    --color-parchment-dark: #EDE7DB;
+    --color-ink: #2C2416;
+}
+
+body {
+    background-color: var(--color-parchment);
+    color: var(--color-ink);
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+}
+
+.font-handwriting {
+    font-family: var(--font-handwriting);
+}
+
+/* Journal ruled lines */
+.ruled-bg {
+    background-image: repeating-linear-gradient(
+        transparent, transparent 31px, rgba(160,140,120,0.15) 31px, rgba(160,140,120,0.15) 32px
+    );
+}
+
+/* Red margin line */
+.margin-line {
+    border-left: 2px solid rgba(200,80,80,0.25);
+}
+
+/* Drop cap */
+.drop-cap::first-letter {
+    float: left;
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    line-height: 0.8;
+    padding-right: 0.5rem;
+    padding-top: 0.25rem;
+    color: var(--color-brand);
+    font-weight: 700;
+}
+
+/* Stamp button */
+.btn-stamp {
+    border: 2px solid var(--color-brand);
+    color: var(--color-brand);
+    background: transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    transition: all 0.3s;
+    display: inline-block;
+}
+.btn-stamp:hover {
+    background: var(--color-brand);
+    color: white;
+}
+
+/* Sepia photos */
+.journal-photo {
+    filter: sepia(15%);
+    transition: filter 0.4s, transform 0.4s;
+}
+.journal-photo:hover {
+    filter: sepia(0%);
+}
+
+/* Washi tape */
+.washi-tape {
+    position: relative;
+}
+.washi-tape::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 10%;
+    width: 80%;
+    height: 24px;
+    background: rgba(232,117,36,0.35);
+    z-index: 10;
+    transform: rotate(-0.5deg);
+}
+
+/* Coffee stain */
+.coffee-stain {
+    position: relative;
+}
+.coffee-stain::after {
+    content: '';
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid rgba(139,90,43,0.08);
+    box-shadow: inset 0 0 20px rgba(139,90,43,0.04);
+    pointer-events: none;
+    top: 40px;
+    right: 60px;
+}
+
+/* Torn paper edges */
+.torn-top {
+    clip-path: polygon(
+        0% 4%, 2% 2%, 5% 5%, 8% 1%, 12% 3%, 15% 0%, 18% 4%, 22% 1%,
+        25% 3%, 30% 0%, 33% 2%, 37% 4%, 40% 1%, 44% 3%, 48% 0%,
+        52% 2%, 55% 4%, 58% 1%, 62% 3%, 65% 0%, 68% 2%, 72% 4%,
+        75% 1%, 78% 3%, 82% 0%, 85% 2%, 88% 4%, 92% 1%, 95% 3%,
+        98% 0%, 100% 2%, 100% 100%, 0% 100%
+    );
+    padding-top: 2rem;
+}
+.torn-bottom {
+    clip-path: polygon(
+        0% 0%, 100% 0%, 100% 96%, 98% 98%, 95% 95%, 92% 99%,
+        88% 96%, 85% 100%, 82% 97%, 78% 99%, 75% 96%, 72% 100%,
+        68% 97%, 65% 99%, 62% 96%, 58% 100%, 55% 97%, 52% 99%,
+        48% 96%, 44% 100%, 40% 97%, 37% 99%, 33% 96%, 30% 100%,
+        25% 97%, 22% 99%, 18% 96%, 15% 100%, 12% 97%, 8% 99%,
+        5% 96%, 2% 100%, 0% 97%
+    );
+    padding-bottom: 2rem;
+}
+
+/* Rotated photos */
+.photo-tilt-right { transform: rotate(1.5deg); }
+.photo-tilt-left { transform: rotate(-1deg); }
+.photo-tilt-slight { transform: rotate(0.75deg); }
+
+/* Nav link underline animation */
+.nav-link {
+    position: relative;
+    letter-spacing: 0.05em;
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-brand);
+    transition: width 0.3s;
+}
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Hero overlay */
+.hero-overlay {
+    background: linear-gradient(to bottom,
+        rgba(44,36,22,0.3) 0%,
+        rgba(44,36,22,0.5) 50%,
+        rgba(245,240,232,1) 100%
+    );
 }

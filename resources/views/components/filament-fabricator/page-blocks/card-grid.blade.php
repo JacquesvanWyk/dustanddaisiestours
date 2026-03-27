@@ -1,27 +1,30 @@
 @aware(['page'])
 
-<section class="py-20 bg-white">
-    <div class="max-w-6xl mx-auto px-6">
+<section class="torn-top torn-bottom bg-parchment-dark py-20">
+    <div class="max-w-6xl mx-auto px-4">
         @if($heading ?? null)
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">{{ $heading }}</h2>
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-bold">{{ $heading }}</h2>
+                <div class="w-16 h-0.5 bg-brand mx-auto mt-4"></div>
+            </div>
         @endif
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach(($cards ?? []) as $card)
-                <a href="{{ $card['link'] ?? '#' }}" class="group block bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
-                    @if($card['image'] ?? null)
-                        <div class="aspect-video overflow-hidden">
-                            <img src="{{ Storage::url($card['image']) }}" alt="{{ $card['title'] }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        </div>
-                    @endif
-                    <div class="p-6">
-                        <h3 class="text-lg font-semibold text-gray-900">{{ $card['title'] }}</h3>
-                        @if($card['description'] ?? null)
-                            <p class="mt-2 text-gray-600">{{ $card['description'] }}</p>
+        @if($cards ?? null)
+            @php $tilts = ['photo-tilt-right', 'photo-tilt-left', 'photo-tilt-slight', 'photo-tilt-right']; @endphp
+            <div class="grid sm:grid-cols-2 lg:grid-cols-{{ min(count($cards), 4) }} gap-8">
+                @foreach($cards as $i => $card)
+                    <a href="{{ $card['link'] ?? '#' }}" class="group block">
+                        @if($card['image'] ?? null)
+                            <div class="washi-tape {{ $tilts[$i % 4] }} mb-4">
+                                <img src="{{ Storage::url($card['image']) }}" alt="{{ $card['title'] ?? '' }}" class="journal-photo w-full aspect-[3/4] object-cover shadow-md group-hover:scale-[1.02] transition-transform">
+                            </div>
                         @endif
-                    </div>
-                </a>
-            @endforeach
-        </div>
+                        <h3 class="text-xl font-bold mb-2">{{ $card['title'] ?? '' }}</h3>
+                        @if($card['description'] ?? null)
+                            <p class="text-sm opacity-70 leading-relaxed">{{ $card['description'] }}</p>
+                        @endif
+                    </a>
+                @endforeach
+            </div>
+        @endif
     </div>
 </section>
