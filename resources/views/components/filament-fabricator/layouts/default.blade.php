@@ -98,15 +98,14 @@
         <x-filament-fabricator::page-blocks :blocks="$page->blocks" />
     </main>
 
-    {{-- Footer wave --}}
-    <div class="relative">
-        <svg class="block w-full h-12 md:h-16" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,30 C120,55 240,5 360,30 C480,55 600,5 720,30 C840,55 960,5 1080,30 C1200,55 1320,5 1440,30 L1440,60 L0,60 Z" fill="#1E1A14"/>
-        </svg>
-    </div>
-
     {{-- Footer --}}
-    <footer class="bg-ink text-sand/60 pt-12 pb-10">
+    <footer class="bg-ink text-sand/60 pt-20 pb-10 relative">
+        {{-- Wavy top edge --}}
+        <div class="absolute -top-[2.5rem] md:-top-[3.5rem] left-0 right-0">
+            <svg class="block w-full h-10 md:h-14" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,30 C120,55 240,5 360,30 C480,55 600,5 720,30 C840,55 960,5 1080,30 C1200,55 1320,5 1440,30 L1440,60 L0,60 Z" fill="#1E1A14"/>
+            </svg>
+        </div>
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-12 mb-16">
                 <div class="md:col-span-2">
