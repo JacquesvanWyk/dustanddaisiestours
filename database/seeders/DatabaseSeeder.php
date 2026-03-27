@@ -51,10 +51,40 @@ class DatabaseSeeder extends Seeder
                     'type' => 'hero',
                     'data' => [
                         'heading' => 'Guided Namaqualand Tours',
-                        'subheading' => 'Guided tours of the Namaqualand region, its towns, its people and its unique biodiversity',
-                        'cta_text' => 'Day Tours',
+                        'subheading' => 'Discover beauty in drought or abundance',
+                        'cta_text' => 'Explore Tours',
                         'cta_link' => '/day-tours',
                         'image' => 'gallery/hero-main.jpg',
+                        'slides' => [
+                            [
+                                'heading' => 'Guided Namaqualand Tours',
+                                'subheading' => 'Discover beauty in drought or abundance',
+                                'cta_text' => 'Explore Tours',
+                                'cta_link' => '/day-tours',
+                                'image' => 'gallery/hero-main.jpg',
+                            ],
+                            [
+                                'heading' => 'Wildflower Season Awaits',
+                                'subheading' => 'Experience the spectacular Namaqualand bloom',
+                                'cta_text' => 'Flower Hunt Tour',
+                                'cta_link' => '/day-tours#booking-form',
+                                'image' => 'gallery/namaqualand-flowers-1.jpg',
+                            ],
+                            [
+                                'heading' => 'Hike the Untamed Trails',
+                                'subheading' => 'From Goegap to Lewerberg — paths less travelled',
+                                'cta_text' => 'View Hiking Trails',
+                                'cta_link' => '/hiking-trails',
+                                'image' => 'gallery/hiking-mountain.jpg',
+                            ],
+                            [
+                                'heading' => 'Namaqualand\'s Best Kept Secret',
+                                'subheading' => 'Balanced rocks and geological wonders',
+                                'cta_text' => 'Book a Tour',
+                                'cta_link' => '/day-tours#booking-form',
+                                'image' => 'gallery/geological-wonder.jpg',
+                            ],
+                        ],
                     ],
                 ],
                 [
