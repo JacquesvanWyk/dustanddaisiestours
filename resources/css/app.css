@@ -5,8 +5,8 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-/* Reey font — download from fontsquirrel.com/fonts/reey */
-@font-face {
+/* Reey font — uncomment when font files are in public/fonts/ */
+/* @font-face {
     font-family: 'Reey';
     src: url('/fonts/Reey-Regular.woff2') format('woff2'),
          url('/fonts/Reey-Regular.woff') format('woff'),
@@ -14,12 +14,12 @@
     font-weight: 400;
     font-style: normal;
     font-display: swap;
-}
+} */
 
 @theme {
     --font-sans: 'Source Serif 4', Georgia, serif;
     --font-heading: 'Playfair Display', serif;
-    --font-accent: 'Reey', 'Caveat', cursive;
+    --font-accent: 'Caveat', cursive;
     --font-handwriting: 'Caveat', cursive;
     --color-brand: #D4712A;
     --color-brand-light: #E8924D;

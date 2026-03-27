@@ -13,8 +13,8 @@
                 @foreach($cards as $i => $card)
                     @php
                         $title = $card['title'] ?? '';
-                        $hasPrice = preg_match('/[–-]\s*(R\s?[\d,]+.*?)$/i', $title, $priceMatch);
-                        $cleanTitle = $hasPrice ? trim(preg_replace('/\s*[–-]\s*R\s?[\d,]+.*$/i', '', $title)) : $title;
+                        $hasPrice = preg_match('/[\x{2013}\x{2014}\-]+\s*((?:R|From\s+R)\s?[\d,]+.*?)$/iu', $title, $priceMatch);
+                        $cleanTitle = $hasPrice ? trim(preg_replace('/\s*[\x{2013}\x{2014}\-]+\s*(?:R|From\s+R)\s?[\d,]+.*$/iu', '', $title)) : $title;
                         $price = $hasPrice ? trim($priceMatch[1]) : null;
 
                         $desc = $card['description'] ?? '';
