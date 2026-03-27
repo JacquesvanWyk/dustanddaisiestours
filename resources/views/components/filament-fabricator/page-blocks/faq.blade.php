@@ -1,23 +1,25 @@
 @aware(['page'])
 
-<section class="bg-parchment py-20">
-    <div class="max-w-3xl mx-auto px-4">
+<section class="bg-sand py-24">
+    <div class="max-w-3xl mx-auto px-6">
         @if($heading ?? null)
-            <div class="text-center mb-12">
-                <p class="font-handwriting text-xl text-brand mb-1">Common Questions</p>
+            <div class="text-center mb-16">
+                <p class="font-accent text-2xl text-brand mb-2">Common Questions</p>
                 <h2 class="text-3xl md:text-4xl font-bold">{{ $heading }}</h2>
-                <div class="w-16 h-0.5 bg-brand mx-auto mt-4"></div>
+                <div class="section-divider mt-5"></div>
             </div>
         @endif
         @if($items ?? null)
-            <div class="space-y-4 margin-line pl-6 ruled-bg">
+            <div class="space-y-0">
                 @foreach($items as $i => $item)
-                    <div x-data="{ open: false }" class="border-b border-ink/10 pb-4">
-                        <button @click="open = !open" class="w-full flex justify-between items-center text-left">
-                            <h3 class="text-lg font-bold">{{ $item['question'] ?? '' }}</h3>
-                            <svg class="w-5 h-5 text-brand shrink-0 transition-transform" :class="open && 'rotate-180'" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19 9l-7 7-7-7"/></svg>
+                    <div x-data="{ open: false }" class="faq-item py-6">
+                        <button @click="open = !open" class="w-full flex justify-between items-center text-left gap-4">
+                            <h3 class="text-lg font-semibold">{{ $item['question'] ?? '' }}</h3>
+                            <div class="w-8 h-8 flex items-center justify-center shrink-0 border border-ink/10 transition" :class="open && 'bg-brand border-brand'">
+                                <svg class="w-4 h-4 transition-all" :class="open ? 'rotate-45 text-white' : 'text-brand'" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
+                            </div>
                         </button>
-                        <div x-show="open" x-collapse class="mt-3 text-ink/70 leading-relaxed">
+                        <div x-show="open" x-collapse class="mt-4 text-ink/60 leading-relaxed text-[0.95rem] pr-12">
                             {{ $item['answer'] ?? '' }}
                         </div>
                     </div>

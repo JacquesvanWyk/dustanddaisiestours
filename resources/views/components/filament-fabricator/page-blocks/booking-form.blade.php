@@ -1,20 +1,20 @@
 @aware(['page'])
 
-<section id="booking-form" class="bg-parchment-dark py-20">
-    <div class="max-w-3xl mx-auto px-4">
+<section id="booking-form" class="bg-sand-dark py-24 bg-topo">
+    <div class="max-w-3xl mx-auto px-6">
         @if($heading ?? null)
-            <div class="text-center mb-12">
-                <p class="font-handwriting text-xl text-brand mb-1">Make a Booking</p>
+            <div class="text-center mb-14">
+                <p class="font-accent text-2xl text-brand mb-2">Make a Booking</p>
                 <h2 class="text-3xl md:text-4xl font-bold">{{ $heading }}</h2>
-                <div class="w-16 h-0.5 bg-brand mx-auto mt-4"></div>
+                <div class="section-divider mt-5"></div>
             </div>
         @endif
 
         @if($body ?? null)
-            <p class="text-center text-lg opacity-80 mb-10 max-w-xl mx-auto">{{ $body }}</p>
+            <p class="text-center text-lg text-ink/60 mb-12 max-w-xl mx-auto leading-relaxed">{{ $body }}</p>
         @endif
 
-        <div class="margin-line pl-6 ruled-bg">
+        <div class="bg-white p-8 md:p-12 shadow-sm border border-ink/5">
             <livewire:booking-form />
         </div>
     </div>

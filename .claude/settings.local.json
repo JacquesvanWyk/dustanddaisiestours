@@ -2,7 +2,17 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:github.com)",
-      "Bash(composer create-project:*)"
+      "Bash(composer create-project:*)",
+      "Bash(agent-browser open:*)",
+      "Bash(agent-browser screenshot:*)",
+      "Bash(git checkout:*)",
+      "Bash(agent-browser reload:*)",
+      "Bash(agent-browser --headed open \"http://dustdaisies.test\")",
+      "Bash(cp \"/Users/jacquesvanwyk/Downloads/uploads 3/2022/03/DSCN1067-scaled.jpg\" /Users/jacquesvanwyk/Developer/motionstack/dustdaisies/public/images/hero.jpg)",
+      "Bash(cp \"/Users/jacquesvanwyk/Downloads/uploads 3/2022/04/IMG_20210516_102058-2-1-scaled.jpg\" /Users/jacquesvanwyk/Developer/motionstack/dustdaisies/public/images/about.jpg)",
+      "Bash(cp \"/Users/jacquesvanwyk/Downloads/uploads 3/2022/04/DSC01369.jpg\" /Users/jacquesvanwyk/Developer/motionstack/dustdaisies/public/images/tour1.jpg)",
+      "Bash(cp \"/Users/jacquesvanwyk/Downloads/uploads 3/2022/04/IMG_1295.jpg\" /Users/jacquesvanwyk/Developer/motionstack/dustdaisies/public/images/tour2.jpg)",
+      "Bash(cp \"/Users/jacquesvanwyk/Downloads/uploads 3/2022/04/DSC00014-scaled.jpg\" /Users/jacquesvanwyk/Developer/motionstack/dustdaisies/public/images/tour3.jpg)"
     ]
   }
 }

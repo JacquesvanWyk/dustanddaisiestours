@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dust & Daisies Tours - Namaqualand</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        :root { --brand: #E87524; --parchment: #F5F0E8; --ink: #2C2416; }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background-color: var(--parchment);
+            color: var(--ink);
+        }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+        .font-handwriting { font-family: 'Caveat', cursive; }
+
+        /* Journal ruled lines */
+        .ruled-bg {
+            background-image: repeating-linear-gradient(
+                transparent, transparent 31px, rgba(160,140,120,0.15) 31px, rgba(160,140,120,0.15) 32px
+            );
+        }
+
+        /* Red margin line */
+        .margin-line { border-left: 2px solid rgba(200,80,80,0.25); }
+
+        /* Drop cap */
+        .drop-cap::first-letter {
+            float: left;
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.25rem;
+            color: var(--brand);
+            font-weight: 700;
+        }
+
+        /* Stamp button */
+        .btn-stamp {
+            border: 2px solid var(--brand);
+            color: var(--brand);
+            background: transparent;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-family: 'Source Serif 4', serif;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            transition: all 0.3s;
+        }
+        .btn-stamp:hover {
+            background: var(--brand);
+            color: white;
+        }
+
+        /* Sepia photos */
+        .journal-photo {
+            filter: sepia(15%);
+            transition: filter 0.4s, transform 0.4s;
+        }
+        .journal-photo:hover {
+            filter: sepia(0%);
+        }
+
+        /* Washi tape */
+        .washi-tape {
+            position: relative;
+        }
+        .washi-tape::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 10%;
+            width: 80%;
+            height: 24px;
+            background: rgba(232,117,36,0.35);
+            z-index: 10;
+            transform: rotate(-0.5deg);
+        }
+
+        /* Coffee stain */
+        .coffee-stain {
+            position: relative;
+        }
+        .coffee-stain::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid rgba(139,90,43,0.08);
+            box-shadow: inset 0 0 20px rgba(139,90,43,0.04);
+            pointer-events: none;
+        }
+
+        /* Torn paper edge */
+        .torn-top {
+            clip-path: polygon(
+                0% 4%, 2% 2%, 5% 5%, 8% 1%, 12% 3%, 15% 0%, 18% 4%, 22% 1%,
+                25% 3%, 30% 0%, 33% 2%, 37% 4%, 40% 1%, 44% 3%, 48% 0%,
+                52% 2%, 55% 4%, 58% 1%, 62% 3%, 65% 0%, 68% 2%, 72% 4%,
+                75% 1%, 78% 3%, 82% 0%, 85% 2%, 88% 4%, 92% 1%, 95% 3%,
+                98% 0%, 100% 2%, 100% 100%, 0% 100%
+            );
+            padding-top: 2rem;
+        }
+        .torn-bottom {
+            clip-path: polygon(
+                0% 0%, 100% 0%, 100% 96%, 98% 98%, 95% 95%, 92% 99%,
+                88% 96%, 85% 100%, 82% 97%, 78% 99%, 75% 96%, 72% 100%,
+                68% 97%, 65% 99%, 62% 96%, 58% 100%, 55% 97%, 52% 99%,
+                48% 96%, 44% 100%, 40% 97%, 37% 99%, 33% 96%, 30% 100%,
+                25% 97%, 22% 99%, 18% 96%, 15% 100%, 12% 97%, 8% 99%,
+                5% 96%, 2% 100%, 0% 97%
+            );
+            padding-bottom: 2rem;
+        }
+
+        /* Rotated photos */
+        .photo-tilt-right { transform: rotate(1.5deg); }
+        .photo-tilt-left { transform: rotate(-1deg); }
+        .photo-tilt-slight { transform: rotate(0.75deg); }
+
+        /* Nav */
+        .nav-link {
+            position: relative;
+            letter-spacing: 0.05em;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--brand);
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Hero overlay */
+        .hero-overlay {
+            background: linear-gradient(to bottom,
+                rgba(44,36,22,0.3) 0%,
+                rgba(44,36,22,0.5) 50%,
+                rgba(245,240,232,1) 100%
+            );
+        }
+    </style>
+</head>
+<body class="antialiased" x-data="{ mobileOpen: false }">
+
+    <!-- Top Bar -->
+    <div class="bg-[#2C2416] text-[#F5F0E8] text-sm py-2">
+        <div class="max-w-6xl mx-auto px-4 flex flex-wrap justify-between items-center gap-2">
+            <div class="flex flex-wrap items-center gap-4 text-xs sm:text-sm">
+                <a href="tel:0834141048" class="hover:text-[#E87524] transition">083 414 1048</a>
+                <span class="opacity-30">|</span>
+                <a href="tel:0829090550" class="hover:text-[#E87524] transition">082 909 0550</a>
+                <span class="opacity-30">|</span>
+                <a href="mailto:info@dustanddaisiestours.co.za" class="hover:text-[#E87524] transition">info@dustanddaisiestours.co.za</a>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="#" aria-label="Facebook" class="hover:text-[#E87524] transition">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+                <a href="#" aria-label="Instagram" class="hover:text-[#E87524] transition">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-[#F5F0E8]/95 backdrop-blur sticky top-0 z-50 border-b border-[#2C2416]/10">
+        <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
+            <a href="#" class="flex items-center gap-2">
+                <span class="font-handwriting text-2xl text-[#E87524]">Dust & Daisies</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8 text-sm uppercase tracking-wider">
+                <a href="#" class="nav-link font-semibold text-[#E87524]">Home</a>
+                <a href="#" class="nav-link">Day Tours</a>
+                <a href="#" class="nav-link">Hiking Trails</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Gallery</a>
+                <a href="#" class="nav-link">Contact</a>
+            </div>
+            <button @click="mobileOpen = !mobileOpen" class="md:hidden p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path x-show="!mobileOpen" stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/>
+                    <path x-show="mobileOpen" stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile menu -->
+        <div x-show="mobileOpen" x-transition class="md:hidden border-t border-[#2C2416]/10 bg-[#F5F0E8] px-4 pb-4">
+            <a href="#" class="block py-2 text-sm uppercase tracking-wider text-[#E87524]">Home</a>
+            <a href="#" class="block py-2 text-sm uppercase tracking-wider">Day Tours</a>
+            <a href="#" class="block py-2 text-sm uppercase tracking-wider">Hiking Trails</a>
+            <a href="#" class="block py-2 text-sm uppercase tracking-wider">About</a>
+            <a href="#" class="block py-2 text-sm uppercase tracking-wider">Gallery</a>
+            <a href="#" class="block py-2 text-sm uppercase tracking-wider">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative min-h-[85vh] flex items-end">
+        <div class="absolute inset-0">
+            <img src="../images/hero.jpg" alt="Namaqualand landscape" class="w-full h-full object-cover journal-photo">
+            <div class="hero-overlay absolute inset-0"></div>
+        </div>
+        <div class="relative z-10 max-w-6xl mx-auto px-4 pb-20 w-full">
+            <p class="font-handwriting text-2xl text-[#E87524] mb-2">Field Notes from Namaqualand</p>
+            <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6 text-[#2C2416]">
+                Guided Namaqualand<br>Tours & Hiking Trails
+            </h1>
+            <p class="text-lg md:text-xl max-w-xl text-[#2C2416]/80 mb-8" style="font-style:italic;">
+                Experience the magic of wildflower season, ancient landscapes, and rich cultural heritage
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="#tours" class="btn-stamp text-sm">Explore Tours</a>
+                <a href="#contact" class="btn-stamp text-sm border-[#2C2416] text-[#2C2416] hover:bg-[#2C2416] hover:text-[#F5F0E8]">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="torn-top bg-[#F5F0E8] relative coffee-stain">
+        <div class="coffee-stain" style="position:absolute;top:40px;right:60px;width:120px;height:120px;border-radius:50%;border:3px solid rgba(139,90,43,0.08);box-shadow:inset 0 0 20px rgba(139,90,43,0.04);pointer-events:none;"></div>
+        <div class="max-w-6xl mx-auto px-4 py-20">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="washi-tape photo-tilt-left">
+                    <img src="../images/about.jpg" alt="Our guides in Namaqualand" class="journal-photo w-full shadow-lg">
+                </div>
+                <div class="margin-line pl-6 ruled-bg">
+                    <p class="font-handwriting text-xl text-[#E87524] mb-1">About Us</p>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Discover Beauty in Drought<br>or Abundance</h2>
+                    <p class="drop-cap text-lg leading-relaxed mb-4">
+                        Dust and Daisies is based in Springbok in the heart of Namaqualand. Our guides Nicky Morris and Elmarie Heyns share their deep knowledge of culture, geology, and natural beauty with every guest who joins us on the trails.
+                    </p>
+                    <p class="text-base leading-relaxed mb-6 opacity-80">
+                        Whether the veld is dressed in wildflowers or wearing its rugged, sun-baked face, Namaqualand never fails to inspire. We invite you to walk with us and see it through new eyes.
+                    </p>
+                    <a href="#" class="btn-stamp text-sm inline-block">Read Our Story</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tours -->
+    <section id="tours" class="torn-top torn-bottom bg-[#EDE7DB] py-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-14">
+                <p class="font-handwriting text-xl text-[#E87524] mb-1">Our Expeditions</p>
+                <h2 class="text-3xl md:text-4xl font-bold">Day Tours</h2>
+                <div class="w-16 h-0.5 bg-[#E87524] mx-auto mt-4"></div>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Tour 1 -->
+                <div class="group">
+                    <div class="washi-tape photo-tilt-right mb-4">
+                        <img src="../images/tour1.jpg" alt="Copper Tour" class="journal-photo w-full aspect-[3/4] object-cover shadow-md group-hover:scale-[1.02] transition-transform">
+                    </div>
+                    <p class="font-handwriting text-sm text-[#E87524]">Cultural Heritage</p>
+                    <h3 class="text-xl font-bold mb-2">Copper Tour</h3>
+                    <p class="text-sm opacity-70 leading-relaxed">Explore the rich mining heritage and cultural history of the Copper Mountains region.</p>
+                </div>
+                <!-- Tour 2 -->
+                <div class="group">
+                    <div class="washi-tape photo-tilt-left mb-4">
+                        <img src="../images/tour2.jpg" alt="Kamiesberg Tour" class="journal-photo w-full aspect-[3/4] object-cover shadow-md group-hover:scale-[1.02] transition-transform">
+                    </div>
+                    <p class="font-handwriting text-sm text-[#E87524]">Mountain Escape</p>
+                    <h3 class="text-xl font-bold mb-2">Kamiesberg Tour</h3>
+                    <p class="text-sm opacity-70 leading-relaxed">Journey through the misty Kamiesberg mountains with their unique flora and farmsteads.</p>
+                </div>
+                <!-- Tour 3 -->
+                <div class="group">
+                    <div class="washi-tape photo-tilt-slight mb-4">
+                        <img src="../images/tour3.jpg" alt="Flower Hunt" class="journal-photo w-full aspect-[3/4] object-cover shadow-md group-hover:scale-[1.02] transition-transform">
+                    </div>
+                    <p class="font-handwriting text-sm text-[#E87524]">Seasonal Special</p>
+                    <h3 class="text-xl font-bold mb-2">Flower Hunt</h3>
+                    <p class="text-sm opacity-70 leading-relaxed">Chase the legendary Namaqualand wildflower blooms with expert botanical guides.</p>
+                </div>
+                <!-- Tour 4 -->
+                <div class="group">
+                    <div class="washi-tape photo-tilt-right mb-4">
+                        <img src="../images/tour4.jpg" alt="Geological Wonder" class="journal-photo w-full aspect-[3/4] object-cover shadow-md group-hover:scale-[1.02] transition-transform">
+                    </div>
+                    <p class="font-handwriting text-sm text-[#E87524]">Ancient Earth</p>
+                    <h3 class="text-xl font-bold mb-2">Geological Wonder</h3>
+                    <p class="text-sm opacity-70 leading-relaxed">Discover billions of years of geological history etched into the Namaqualand landscape.</p>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <a href="#" class="btn-stamp text-sm">View All Tours</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Preview -->
+    <section class="bg-[#F5F0E8] py-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <p class="font-handwriting text-xl text-[#E87524] mb-1">From the Field</p>
+                <h2 class="text-3xl md:text-4xl font-bold">Gallery</h2>
+                <div class="w-16 h-0.5 bg-[#E87524] mx-auto mt-4"></div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="washi-tape photo-tilt-left">
+                    <img src="../images/gallery1.jpg" alt="Gallery 1" class="journal-photo w-full aspect-square object-cover shadow-md">
+                </div>
+                <div class="washi-tape photo-tilt-right row-span-2 hidden md:block">
+                    <img src="../images/gallery2.jpg" alt="Gallery 2" class="journal-photo w-full h-full object-cover shadow-md">
+                </div>
+                <div class="washi-tape photo-tilt-slight">
+                    <img src="../images/gallery3.jpg" alt="Gallery 3" class="journal-photo w-full aspect-square object-cover shadow-md">
+                </div>
+            </div>
+            <div class="text-center mt-10">
+                <a href="#" class="btn-stamp text-sm">View Full Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="relative torn-top torn-bottom">
+        <div class="absolute inset-0">
+            <img src="../images/cta.jpg" alt="Namaqualand sunset" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-[#2C2416]/70"></div>
+        </div>
+        <div class="relative z-10 max-w-3xl mx-auto px-4 py-28 text-center text-[#F5F0E8]">
+            <p class="font-handwriting text-2xl text-[#E87524] mb-2">Your Adventure Awaits</p>
+            <h2 class="text-3xl md:text-5xl font-bold mb-6">Ready for an Unforgettable<br>Namaqualand Tour?</h2>
+            <p class="text-lg opacity-80 mb-8 max-w-xl mx-auto">
+                Whether you seek wildflowers, ancient geology, or cultural discovery, our expert guides will craft an experience you will remember forever.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="tel:0834141048" class="btn-stamp text-sm border-[#F5F0E8] text-[#F5F0E8] hover:bg-[#F5F0E8] hover:text-[#2C2416]">Call Us</a>
+                <a href="#" class="btn-stamp text-sm border-[#E87524] text-[#E87524] hover:bg-[#E87524] hover:text-white">Book a Tour</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#2C2416] text-[#F5F0E8]/80 pt-16 pb-8">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-12 mb-12">
+                <div>
+                    <span class="font-handwriting text-2xl text-[#E87524] block mb-4">Dust & Daisies</span>
+                    <p class="text-sm leading-relaxed">Guided tours and hiking trails through the magic of Namaqualand. Based in Springbok, Northern Cape.</p>
+                </div>
+                <div>
+                    <h4 class="text-sm uppercase tracking-widest text-[#E87524] mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-[#E87524] transition">Home</a></li>
+                        <li><a href="#" class="hover:text-[#E87524] transition">Day Tours</a></li>
+                        <li><a href="#" class="hover:text-[#E87524] transition">Hiking Trails</a></li>
+                        <li><a href="#" class="hover:text-[#E87524] transition">About</a></li>
+                        <li><a href="#" class="hover:text-[#E87524] transition">Gallery</a></li>
+                        <li><a href="#" class="hover:text-[#E87524] transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm uppercase tracking-widest text-[#E87524] mb-4">Contact</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li>Springbok, Northern Cape</li>
+                        <li><a href="tel:0834141048" class="hover:text-[#E87524] transition">083 414 1048</a></li>
+                        <li><a href="tel:0829090550" class="hover:text-[#E87524] transition">082 909 0550</a></li>
+                        <li><a href="mailto:info@dustanddaisiestours.co.za" class="hover:text-[#E87524] transition">info@dustanddaisiestours.co.za</a></li>
+                    </ul>
+                    <div class="flex gap-4 mt-4">
+                        <a href="#" aria-label="Facebook" class="hover:text-[#E87524] transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="#" aria-label="Instagram" class="hover:text-[#E87524] transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-[#F5F0E8]/10 pt-6 text-center text-xs opacity-50">
+                &copy; 2026 Dust and Daisies Tours. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

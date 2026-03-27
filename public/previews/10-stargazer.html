@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dust & Daisies Tours - Stargazer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { display: ['Playfair Display', 'serif'], body: ['Inter', 'sans-serif'] },
+                    colors: { brand: '#E87524', warm: { 50: '#FFF8F0', 100: '#F5E6D0', 200: '#D4A574', 300: '#8B5E3C' }, night: { 700: '#4A2D5E', 900: '#0F1B2D' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #FFF8F0 0%, #F5E6D0 15%, #D4A574 25%, #8B5E3C 35%, #4A2D5E 45%, #0F1B2D 55%, #0F1B2D 100%);
+        }
+        .font-display { font-family: 'Playfair Display', serif; }
+        @keyframes twinkle { 0%,100%{opacity:0.3} 50%{opacity:1} }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--dur, 3s) ease-in-out infinite;
+            animation-delay: var(--delay, 0s);
+        }
+        @keyframes pulse-glow {
+            0%,100% { box-shadow: 0 0 8px rgba(232,117,36,0.4); }
+            50% { box-shadow: 0 0 24px rgba(232,117,36,0.8), 0 0 48px rgba(232,117,36,0.3); }
+        }
+        .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        .milky-way {
+            background:
+                radial-gradient(ellipse 600px 80px at 30% 40%, rgba(200,180,255,0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 800px 60px at 70% 60%, rgba(180,200,255,0.04) 0%, transparent 70%);
+        }
+        .constellation-line { stroke: rgba(255,255,255,0.2); stroke-width: 1; }
+        .constellation-dot { fill: rgba(255,255,255,0.6); }
+    </style>
+</head>
+<body class="text-gray-900 overflow-x-hidden">
+
+<!-- Stars Container (visible in dark sections) -->
+<div class="fixed inset-0 pointer-events-none z-0" id="stars" aria-hidden="true"></div>
+<script>
+    const c = document.getElementById('stars');
+    for (let i = 0; i < 120; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        const size = Math.random() * 2.5 + 0.5;
+        s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s`;
+        c.appendChild(s);
+    }
+</script>
+
+<!-- Hero Section (Warm/Amber) -->
+<section class="relative min-h-screen flex items-center z-10">
+    <div class="absolute inset-0">
+        <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1600&q=80" alt="Namaqualand wildflowers" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-b from-amber-900/40 via-amber-800/30 to-transparent"></div>
+    </div>
+    <div class="relative z-10 max-w-5xl mx-auto px-6 py-24 text-white">
+        <div class="inline-flex items-center gap-2 mb-6 text-amber-200 text-sm font-medium tracking-widest uppercase">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+            Guided Namaqualand Tours
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+        </div>
+        <h1 class="font-display text-5xl md:text-7xl font-bold leading-tight">Dust & Daisies<br>Tours</h1>
+        <p class="mt-4 text-xl md:text-2xl max-w-2xl text-amber-100/90 font-light">Discover beauty in drought or abundance</p>
+        <a href="#tours" class="mt-8 inline-block px-8 py-3 bg-brand text-white font-semibold rounded-lg hover:bg-orange-700 transition-colors">
+            Explore Our Tours
+        </a>
+    </div>
+</section>
+
+<!-- Constellation Divider -->
+<div class="relative z-10 -mt-4">
+    <svg class="w-full h-16" viewBox="0 0 1200 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <line x1="100" y1="30" x2="250" y2="15" class="constellation-line"/>
+        <line x1="250" y1="15" x2="400" y2="40" class="constellation-line"/>
+        <line x1="400" y1="40" x2="550" y2="20" class="constellation-line"/>
+        <line x1="550" y1="20" x2="700" y2="35" class="constellation-line"/>
+        <line x1="700" y1="35" x2="850" y2="10" class="constellation-line"/>
+        <line x1="850" y1="10" x2="1000" y2="30" class="constellation-line"/>
+        <line x1="1000" y1="30" x2="1100" y2="18" class="constellation-line"/>
+        <circle cx="100" cy="30" r="3" class="constellation-dot"/>
+        <circle cx="250" cy="15" r="2.5" class="constellation-dot"/>
+        <circle cx="400" cy="40" r="3" class="constellation-dot"/>
+        <circle cx="550" cy="20" r="2" class="constellation-dot"/>
+        <circle cx="700" cy="35" r="3" class="constellation-dot"/>
+        <circle cx="850" cy="10" r="2.5" class="constellation-dot"/>
+        <circle cx="1000" cy="30" r="2" class="constellation-dot"/>
+        <circle cx="1100" cy="18" r="3" class="constellation-dot"/>
+    </svg>
+</div>
+
+<!-- About Section (Warm) -->
+<section class="relative z-10 py-20 px-6">
+    <div class="max-w-5xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="font-display text-4xl font-bold text-amber-950">About Dust & Daisies</h2>
+                <p class="mt-6 text-amber-900/80 leading-relaxed">Based in Springbok in the heart of the Northern Cape, Dust & Daisies Tours offers guided day tours and hiking trails through the stunning Namaqualand landscape. Whether the veld is carpeted in wildflowers or quietly enduring drought, there is always beauty to discover.</p>
+                <p class="mt-4 text-amber-900/80 leading-relaxed">Our experienced guides Nicky Morris and Elmarie Heyns share their deep knowledge of the region's culture, geology, and ecology.</p>
+            </div>
+            <div class="rounded-2xl overflow-hidden shadow-xl">
+                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&q=80" alt="Namaqualand landscape" class="w-full h-80 object-cover">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tour Cards Section (Warm transitioning) -->
+<section id="tours" class="relative z-10 py-20 px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-14">
+            <h2 class="font-display text-4xl font-bold text-amber-100">Day Tours</h2>
+            <p class="mt-3 text-amber-200/70 max-w-xl mx-auto">Explore Namaqualand's diverse landscapes, from copper history to geological wonders.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8" x-data="{ hover: null }">
+            <div @mouseenter="hover='copper'" @mouseleave="hover=null" class="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-brand/40 transition-all duration-300 group">
+                <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&q=80" alt="Copper Tour" class="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="p-6">
+                    <h3 class="font-display text-xl font-semibold text-white">Copper Tour</h3>
+                    <p class="mt-2 text-amber-200/60 text-sm leading-relaxed">Trace the rich copper mining heritage of the Northern Cape through historic towns and mining sites.</p>
+                </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-brand/40 transition-all duration-300 group">
+                <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80" alt="Kamiesberg" class="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="p-6">
+                    <h3 class="font-display text-xl font-semibold text-white">Kamiesberg</h3>
+                    <p class="mt-2 text-amber-200/60 text-sm leading-relaxed">Journey through the misty Kamiesberg mountains, discovering hidden valleys and unique fynbos.</p>
+                </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-brand/40 transition-all duration-300 group">
+                <img src="https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=800&q=80" alt="Flower Hunt" class="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="p-6">
+                    <h3 class="font-display text-xl font-semibold text-white">Flower Hunt</h3>
+                    <p class="mt-2 text-amber-200/60 text-sm leading-relaxed">Chase the famous Namaqualand spring wildflower blooms across the most spectacular displays.</p>
+                </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-brand/40 transition-all duration-300 group">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Geological Wonder" class="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="p-6">
+                    <h3 class="font-display text-xl font-semibold text-white">Geological Wonder</h3>
+                    <p class="mt-2 text-amber-200/60 text-sm leading-relaxed">Explore ancient rock formations and geological marvels that tell billions of years of Earth's story.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Wave Transition: warm to night -->
+<div class="relative z-10">
+    <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class="w-full h-20">
+        <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,100 L0,100 Z" fill="#0F1B2D" fill-opacity="0.3"/>
+        <path d="M0,60 C360,20 720,90 1080,50 C1260,35 1380,60 1440,55 L1440,100 L0,100 Z" fill="#0F1B2D" fill-opacity="0.2"/>
+    </svg>
+</div>
+
+<!-- CTA Section (Night transition) -->
+<section class="relative z-10 py-24 px-6 milky-way">
+    <div class="max-w-3xl mx-auto text-center">
+        <svg class="w-10 h-10 mx-auto mb-6 text-brand" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-white">Ready for Adventure?</h2>
+        <p class="mt-6 text-gray-300/80 text-lg max-w-xl mx-auto leading-relaxed">Book a guided tour with Dust & Daisies and experience the Northern Cape like never before. From wildflowers to starlit skies.</p>
+        <a href="#contact" class="mt-10 inline-block px-10 py-4 bg-brand text-white font-semibold rounded-xl hover:bg-orange-600 transition-colors pulse-glow text-lg">
+            Book Your Tour
+        </a>
+    </div>
+</section>
+
+<!-- Hiking Trails (Night sky) -->
+<section class="relative z-10 py-20 px-6 milky-way">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-14">
+            <h2 class="font-display text-4xl font-bold text-white">Hiking Trails</h2>
+            <p class="mt-3 text-gray-400 max-w-xl mx-auto">Guided hikes through Namaqualand's most breathtaking terrain.</p>
+        </div>
+        <div class="grid md:grid-cols-4 gap-6" x-data="{ active: null }">
+            <div @click="active = active === 'goegap' ? null : 'goegap'" class="cursor-pointer rounded-xl overflow-hidden border border-white/10 hover:border-brand/50 transition-all bg-white/5 backdrop-blur-sm">
+                <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&q=80" alt="Goegap" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <h3 class="font-display text-lg font-semibold text-white">Goegap</h3>
+                    <p x-show="active==='goegap'" x-transition class="mt-2 text-gray-400 text-sm">Explore the Goegap Nature Reserve with its stunning succulent gardens and mountain vistas.</p>
+                </div>
+            </div>
+            <div @click="active = active === 'lewerberg' ? null : 'lewerberg'" class="cursor-pointer rounded-xl overflow-hidden border border-white/10 hover:border-brand/50 transition-all bg-white/5 backdrop-blur-sm">
+                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&q=80" alt="Lewerberg" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <h3 class="font-display text-lg font-semibold text-white">Lewerberg</h3>
+                    <p x-show="active==='lewerberg'" x-transition class="mt-2 text-gray-400 text-sm">A challenging mountain trail rewarding hikers with panoramic Northern Cape views.</p>
+                </div>
+            </div>
+            <div @click="active = active === 'bruinkop' ? null : 'bruinkop'" class="cursor-pointer rounded-xl overflow-hidden border border-white/10 hover:border-brand/50 transition-all bg-white/5 backdrop-blur-sm">
+                <img src="https://images.unsplash.com/photo-1445363692815-ebcd599f7621?w=400&q=80" alt="Bruinkop" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <h3 class="font-display text-lg font-semibold text-white">Bruinkop</h3>
+                    <p x-show="active==='bruinkop'" x-transition class="mt-2 text-gray-400 text-sm">A scenic ridge walk offering views across the vast Namaqualand plains.</p>
+                </div>
+            </div>
+            <div @click="active = active === 'ponder' ? null : 'ponder'" class="cursor-pointer rounded-xl overflow-hidden border border-white/10 hover:border-brand/50 transition-all bg-white/5 backdrop-blur-sm">
+                <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=400&q=80" alt="Ponder Trail" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <h3 class="font-display text-lg font-semibold text-white">Ponder Trail</h3>
+                    <p x-show="active==='ponder'" x-transition class="mt-2 text-gray-400 text-sm">A reflective, gentle trail perfect for contemplation amidst natural beauty.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Constellation Divider 2 -->
+<div class="relative z-10">
+    <svg class="w-full h-12" viewBox="0 0 1200 50" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <line x1="150" y1="25" x2="350" y2="12" class="constellation-line"/>
+        <line x1="350" y1="12" x2="500" y2="35" class="constellation-line"/>
+        <line x1="500" y1="35" x2="700" y2="18" class="constellation-line"/>
+        <line x1="700" y1="18" x2="900" y2="30" class="constellation-line"/>
+        <line x1="900" y1="30" x2="1050" y2="15" class="constellation-line"/>
+        <circle cx="150" cy="25" r="2.5" class="constellation-dot"/>
+        <circle cx="350" cy="12" r="2" class="constellation-dot"/>
+        <circle cx="500" cy="35" r="3" class="constellation-dot"/>
+        <circle cx="700" cy="18" r="2" class="constellation-dot"/>
+        <circle cx="900" cy="30" r="2.5" class="constellation-dot"/>
+        <circle cx="1050" cy="15" r="2" class="constellation-dot"/>
+    </svg>
+</div>
+
+<!-- Gallery (Night sky) -->
+<section class="relative z-10 py-20 px-6 milky-way">
+    <div class="max-w-6xl mx-auto">
+        <h2 class="font-display text-4xl font-bold text-white text-center mb-12">Gallery</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4" x-data="{ lightbox: null }">
+            <div @click="lightbox='https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1200&q=80'" class="cursor-pointer rounded-xl overflow-hidden aspect-square group">
+                <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600&q=80" alt="Gallery 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            </div>
+            <div @click="lightbox='https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1200&q=80'" class="cursor-pointer rounded-xl overflow-hidden aspect-square group">
+                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&q=80" alt="Gallery 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            </div>
+            <div @click="lightbox='https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80'" class="cursor-pointer rounded-xl overflow-hidden aspect-square group">
+                <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&q=80" alt="Gallery 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            </div>
+            <div @click="lightbox='https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=1200&q=80'" class="cursor-pointer rounded-xl overflow-hidden aspect-square group">
+                <img src="https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=600&q=80" alt="Gallery 4" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            </div>
+            <div @click="lightbox='https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80'" class="cursor-pointer rounded-xl overflow-hidden aspect-square group">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Gallery 5" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            </div>
+            <div @click="lightbox='https://images.unsplash.com/photo-1551632811-561732d1e306?w=1200&q=80'" class="cursor-pointer rounded-xl overflow-hidden aspect-square group">
+                <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&q=80" alt="Gallery 6" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            </div>
+            <!-- Lightbox -->
+            <div x-show="lightbox" x-transition.opacity @click="lightbox=null" class="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-8 cursor-pointer">
+                <img :src="lightbox" class="max-w-full max-h-full rounded-lg object-contain">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact (Night sky) -->
+<section id="contact" class="relative z-10 py-20 px-6 milky-way">
+    <div class="max-w-4xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-12">
+            <div>
+                <h2 class="font-display text-4xl font-bold text-white">Get in Touch</h2>
+                <p class="mt-4 text-gray-400 leading-relaxed">Ready to explore Namaqualand? Contact us to plan your perfect tour or hiking adventure.</p>
+                <div class="mt-8 space-y-4 text-gray-300">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        Springbok, Northern Cape
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        info@dustdaisies.co.za
+                    </div>
+                </div>
+            </div>
+            <form class="space-y-5" @submit.prevent>
+                <input type="text" placeholder="Your Name" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/10 text-white placeholder-gray-500 focus:border-brand focus:outline-none transition">
+                <input type="email" placeholder="Email Address" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/10 text-white placeholder-gray-500 focus:border-brand focus:outline-none transition">
+                <textarea rows="4" placeholder="Your Message" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/10 text-white placeholder-gray-500 focus:border-brand focus:outline-none transition resize-none"></textarea>
+                <button type="submit" class="w-full px-6 py-3 bg-brand text-white font-semibold rounded-lg hover:bg-orange-600 transition-colors">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Footer (Deep night) -->
+<footer class="relative z-10 py-12 px-6 border-t border-white/10">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-3">
+            <svg class="w-6 h-6 text-brand" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/></svg>
+            <span class="font-display text-xl font-bold text-white">Dust & Daisies</span>
+        </div>
+        <nav class="flex gap-8 text-sm text-gray-400">
+            <a href="#" class="hover:text-brand transition-colors">Day Tours</a>
+            <a href="#" class="hover:text-brand transition-colors">Hiking Trails</a>
+            <a href="#" class="hover:text-brand transition-colors">About</a>
+            <a href="#" class="hover:text-brand transition-colors">Gallery</a>
+            <a href="#contact" class="hover:text-brand transition-colors">Contact</a>
+        </nav>
+        <p class="text-gray-500 text-sm">&copy; 2026 Dust & Daisies Tours</p>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ mobileMenu: false, scrollY: 0 }" @scroll.window="scrollY = window.scrollY">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dust &amp; Daisies Tours - Rugged Terrain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { orange: { 500: '#E87524', 600: '#d4691f' } },
+                    fontFamily: { display: ['Bebas Neue'], heading: ['Barlow Condensed'], body: ['Barlow'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Barlow', sans-serif; background: #0a0a0a; color: #d4d4d4; }
+        .font-display { font-family: 'Bebas Neue', sans-serif; }
+        .font-heading { font-family: 'Barlow Condensed', sans-serif; }
+        .cut { clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); }
+        .cut-lg { clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px)); }
+        .cut-btn { clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
+        .topo-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 200 Q100 150 200 200 T400 200' fill='none' stroke='%23E8752410' stroke-width='1'/%3E%3Cpath d='M0 180 Q120 130 200 180 T400 180' fill='none' stroke='%23E8752408' stroke-width='1'/%3E%3Cpath d='M0 220 Q80 270 200 220 T400 220' fill='none' stroke='%23E8752408' stroke-width='1'/%3E%3Cpath d='M0 160 Q140 110 200 160 T400 160' fill='none' stroke='%23E8752406' stroke-width='1'/%3E%3Cpath d='M0 240 Q60 290 200 240 T400 240' fill='none' stroke='%23E8752406' stroke-width='1'/%3E%3Cpath d='M0 100 Q100 50 200 100 T400 100' fill='none' stroke='%23E8752405' stroke-width='1'/%3E%3Cpath d='M0 300 Q100 350 200 300 T400 300' fill='none' stroke='%23E8752405' stroke-width='1'/%3E%3C/svg%3E");
+        }
+        .grid-overlay {
+            background-image: linear-gradient(rgba(232,117,36,0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(232,117,36,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .gps { font-family: 'Barlow Condensed', monospace; letter-spacing: 0.15em; }
+    </style>
+</head>
+<body class="topo-bg grid-overlay overflow-x-hidden">
+
+    <!-- Scroll Indicator -->
+    <div class="fixed top-0 left-0 h-[2px] bg-orange-500 z-50 transition-all duration-150"
+         :style="'width:' + (scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%'"></div>
+
+    <!-- GPS Coordinates Strip -->
+    <div class="fixed bottom-4 right-4 z-40 gps text-[10px] text-neutral-600 uppercase tracking-widest hidden md:block">
+        29.6707&deg; S, 17.8836&deg; E &bull; ELEV 1010m
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-40 transition-all duration-300"
+         :class="scrollY > 50 ? 'bg-[#0a0a0a]/95 backdrop-blur border-b border-neutral-800' : ''">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="font-display text-2xl tracking-wider text-white">
+                DUST <span class="text-orange-500">&</span> DAISIES
+            </a>
+            <div class="hidden md:flex items-center gap-8 font-heading text-sm uppercase tracking-widest text-neutral-400">
+                <a href="#tours" class="hover:text-orange-500 transition">Day Tours</a>
+                <a href="#trails" class="hover:text-orange-500 transition">Hiking Trails</a>
+                <a href="#about" class="hover:text-orange-500 transition">About</a>
+                <a href="#gallery" class="hover:text-orange-500 transition">Gallery</a>
+                <a href="#contact" class="cut-btn bg-orange-500 text-white px-5 py-2 hover:bg-orange-600 transition font-semibold">Contact</a>
+            </div>
+            <button @click="mobileMenu = !mobileMenu" class="md:hidden text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path x-show="!mobileMenu" stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    <path x-show="mobileMenu" stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div x-show="mobileMenu" x-transition class="md:hidden bg-[#0a0a0a]/95 backdrop-blur border-t border-neutral-800 px-6 py-6 space-y-4 font-heading text-sm uppercase tracking-widest">
+            <a href="#tours" class="block text-neutral-300 hover:text-orange-500">Day Tours</a>
+            <a href="#trails" class="block text-neutral-300 hover:text-orange-500">Hiking Trails</a>
+            <a href="#about" class="block text-neutral-300 hover:text-orange-500">About</a>
+            <a href="#gallery" class="block text-neutral-300 hover:text-orange-500">Gallery</a>
+            <a href="#contact" class="block text-orange-500">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative min-h-screen flex items-center">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1600&q=80" alt="Namaqualand landscape" class="w-full h-full object-cover opacity-30">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent"></div>
+        </div>
+        <div class="relative z-10 max-w-6xl mx-auto px-6 pt-32 pb-20">
+            <p class="gps text-orange-500 text-xs tracking-[0.3em] mb-4">29.6707&deg; S &bull; 17.8836&deg; E &bull; SPRINGBOK</p>
+            <h1 class="font-display text-6xl md:text-8xl lg:text-9xl text-white leading-none tracking-wide">
+                DUST <span class="text-orange-500">&</span><br>DAISIES
+            </h1>
+            <p class="font-heading text-xl md:text-2xl text-neutral-400 mt-4 max-w-xl uppercase tracking-wider">
+                Discover beauty in drought or abundance
+            </p>
+            <p class="text-neutral-500 mt-4 max-w-md text-sm leading-relaxed">
+                Guided Namaqualand tours and hiking trails through the rugged Northern Cape. Experience wildflowers, ancient geology, and untamed wilderness.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-4">
+                <a href="#tours" class="cut-btn bg-orange-500 text-white font-heading font-semibold uppercase tracking-wider px-8 py-3 hover:bg-orange-600 transition text-sm">
+                    Explore Tours
+                </a>
+                <a href="#trails" class="cut-btn border border-neutral-700 text-neutral-300 font-heading uppercase tracking-wider px-8 py-3 hover:border-orange-500 hover:text-orange-500 transition text-sm">
+                    Hiking Trails
+                </a>
+            </div>
+            <!-- Elevation marker -->
+            <div class="absolute bottom-10 right-6 hidden lg:block text-right">
+                <div class="gps text-[10px] text-neutral-600 tracking-widest">ELEV</div>
+                <div class="font-display text-4xl text-neutral-800">1010m</div>
+            </div>
+        </div>
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+            <span class="gps text-[9px] text-neutral-600 tracking-widest">SCROLL</span>
+            <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7"/></svg>
+        </div>
+    </section>
+
+    <!-- Day Tours -->
+    <section id="tours" class="py-24">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex items-center gap-4 mb-2">
+                <div class="h-px flex-1 bg-neutral-800"></div>
+                <span class="gps text-[10px] text-neutral-600 tracking-widest">SECTION 01</span>
+                <div class="h-px flex-1 bg-neutral-800"></div>
+            </div>
+            <h2 class="font-display text-5xl md:text-6xl text-white text-center tracking-wide">DAY <span class="text-orange-500">TOURS</span></h2>
+            <p class="text-center text-neutral-500 mt-3 max-w-lg mx-auto text-sm">Guided expeditions through Namaqualand's most extraordinary landscapes.</p>
+
+            <div class="grid md:grid-cols-2 gap-6 mt-14">
+                <!-- Tour Card -->
+                <div class="cut-lg bg-neutral-900/80 border border-neutral-800 hover:border-orange-500/30 transition group" x-data="{ open: false }">
+                    <div class="relative overflow-hidden h-52">
+                        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80" alt="Copper Tour" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-70">
+                        <div class="absolute top-3 left-3 gps text-[9px] text-orange-500 tracking-widest bg-black/60 px-2 py-1 cut-btn">HERITAGE</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading text-xl font-bold text-white uppercase tracking-wider">Copper Tour</h3>
+                        <p class="text-neutral-500 text-sm mt-2">Trace the copper mining heritage of Springbok and Nababeep through historical sites and cultural landmarks.</p>
+                    </div>
+                </div>
+
+                <div class="cut-lg bg-neutral-900/80 border border-neutral-800 hover:border-orange-500/30 transition group">
+                    <div class="relative overflow-hidden h-52">
+                        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80" alt="Kamiesberg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-70">
+                        <div class="absolute top-3 left-3 gps text-[9px] text-orange-500 tracking-widest bg-black/60 px-2 py-1 cut-btn">MOUNTAIN</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading text-xl font-bold text-white uppercase tracking-wider">Kamiesberg</h3>
+                        <p class="text-neutral-500 text-sm mt-2">Journey through the misty Kamiesberg mountains, discovering endemic flora and dramatic mountain passes.</p>
+                    </div>
+                </div>
+
+                <div class="cut-lg bg-neutral-900/80 border border-neutral-800 hover:border-orange-500/30 transition group">
+                    <div class="relative overflow-hidden h-52">
+                        <img src="https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=800&q=80" alt="Flower Hunt" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-70">
+                        <div class="absolute top-3 left-3 gps text-[9px] text-orange-500 tracking-widest bg-black/60 px-2 py-1 cut-btn">SEASONAL</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading text-xl font-bold text-white uppercase tracking-wider">Flower Hunt</h3>
+                        <p class="text-neutral-500 text-sm mt-2">Chase the spectacular Namaqualand wildflower bloom across secret valleys and hidden meadows.</p>
+                    </div>
+                </div>
+
+                <div class="cut-lg bg-neutral-900/80 border border-neutral-800 hover:border-orange-500/30 transition group">
+                    <div class="relative overflow-hidden h-52">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Geological Wonder" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-70">
+                        <div class="absolute top-3 left-3 gps text-[9px] text-orange-500 tracking-widest bg-black/60 px-2 py-1 cut-btn">GEOLOGY</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading text-xl font-bold text-white uppercase tracking-wider">Geological Wonder</h3>
+                        <p class="text-neutral-500 text-sm mt-2">Explore ancient rock formations and geological marvels spanning billions of years of Earth's history.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hiking Trails -->
+    <section id="trails" class="py-24 border-t border-neutral-800/50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex items-center gap-4 mb-2">
+                <div class="h-px flex-1 bg-neutral-800"></div>
+                <span class="gps text-[10px] text-neutral-600 tracking-widest">SECTION 02</span>
+                <div class="h-px flex-1 bg-neutral-800"></div>
+            </div>
+            <h2 class="font-display text-5xl md:text-6xl text-white text-center tracking-wide">HIKING <span class="text-orange-500">TRAILS</span></h2>
+            <p class="text-center text-neutral-500 mt-3 max-w-lg mx-auto text-sm">Navigate the untamed wilderness of the Northern Cape on foot.</p>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-14">
+                <div class="cut bg-neutral-900/60 border border-neutral-800 hover:border-orange-500/40 transition p-5 group">
+                    <div class="gps text-[9px] text-orange-500 tracking-widest mb-3">TRAIL 01 &bull; 6.2KM</div>
+                    <h3 class="font-heading text-lg font-bold text-white uppercase tracking-wider">Goegap</h3>
+                    <p class="text-neutral-500 text-xs mt-2 leading-relaxed">Nature reserve trails through succulent karoo with springbok and gemsbok sightings.</p>
+                    <div class="mt-4 h-px bg-neutral-800 group-hover:bg-orange-500/30 transition"></div>
+                    <div class="gps text-[9px] text-neutral-700 mt-2">ELEV GAIN 240m</div>
+                </div>
+                <div class="cut bg-neutral-900/60 border border-neutral-800 hover:border-orange-500/40 transition p-5 group">
+                    <div class="gps text-[9px] text-orange-500 tracking-widest mb-3">TRAIL 02 &bull; 8.5KM</div>
+                    <h3 class="font-heading text-lg font-bold text-white uppercase tracking-wider">Lewerberg</h3>
+                    <p class="text-neutral-500 text-xs mt-2 leading-relaxed">Ascend through rugged terrain to panoramic views of the Spektakel valley below.</p>
+                    <div class="mt-4 h-px bg-neutral-800 group-hover:bg-orange-500/30 transition"></div>
+                    <div class="gps text-[9px] text-neutral-700 mt-2">ELEV GAIN 480m</div>
+                </div>
+                <div class="cut bg-neutral-900/60 border border-neutral-800 hover:border-orange-500/40 transition p-5 group">
+                    <div class="gps text-[9px] text-orange-500 tracking-widest mb-3">TRAIL 03 &bull; 5.8KM</div>
+                    <h3 class="font-heading text-lg font-bold text-white uppercase tracking-wider">Bruinkop</h3>
+                    <p class="text-neutral-500 text-xs mt-2 leading-relaxed">Summit hike with 360-degree views of the Richtersveld and surrounding peaks.</p>
+                    <div class="mt-4 h-px bg-neutral-800 group-hover:bg-orange-500/30 transition"></div>
+                    <div class="gps text-[9px] text-neutral-700 mt-2">ELEV GAIN 360m</div>
+                </div>
+                <div class="cut bg-neutral-900/60 border border-neutral-800 hover:border-orange-500/40 transition p-5 group">
+                    <div class="gps text-[9px] text-orange-500 tracking-widest mb-3">TRAIL 04 &bull; 3.2KM</div>
+                    <h3 class="font-heading text-lg font-bold text-white uppercase tracking-wider">Ponder Trail</h3>
+                    <p class="text-neutral-500 text-xs mt-2 leading-relaxed">A contemplative walk through ancient quiver tree forest at golden hour.</p>
+                    <div class="mt-4 h-px bg-neutral-800 group-hover:bg-orange-500/30 transition"></div>
+                    <div class="gps text-[9px] text-neutral-700 mt-2">ELEV GAIN 120m</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="py-24 border-t border-neutral-800/50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex items-center gap-4 mb-2">
+                <div class="h-px flex-1 bg-neutral-800"></div>
+                <span class="gps text-[10px] text-neutral-600 tracking-widest">SECTION 03</span>
+                <div class="h-px flex-1 bg-neutral-800"></div>
+            </div>
+            <h2 class="font-display text-5xl md:text-6xl text-white text-center tracking-wide">YOUR <span class="text-orange-500">GUIDES</span></h2>
+
+            <div class="grid md:grid-cols-2 gap-8 mt-14">
+                <div class="cut-lg bg-neutral-900/60 border border-neutral-800 p-8">
+                    <div class="flex items-start gap-4">
+                        <div class="w-16 h-16 cut bg-orange-500/20 flex items-center justify-center flex-shrink-0">
+                            <span class="font-display text-2xl text-orange-500">NM</span>
+                        </div>
+                        <div>
+                            <h3 class="font-heading text-xl font-bold text-white uppercase tracking-wider">Nicky Morris</h3>
+                            <p class="gps text-[9px] text-orange-500 tracking-widest mt-1">CULTURAL SPECIALIST</p>
+                            <p class="text-neutral-500 text-sm mt-3 leading-relaxed">Expert in Namaqualand's rich cultural heritage, copper mining history, and the stories of the people who shaped this rugged landscape.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cut-lg bg-neutral-900/60 border border-neutral-800 p-8">
+                    <div class="flex items-start gap-4">
+                        <div class="w-16 h-16 cut bg-orange-500/20 flex items-center justify-center flex-shrink-0">
+                            <span class="font-display text-2xl text-orange-500">EH</span>
+                        </div>
+                        <div>
+                            <h3 class="font-heading text-xl font-bold text-white uppercase tracking-wider">Elmarie Heyns</h3>
+                            <p class="gps text-[9px] text-orange-500 tracking-widest mt-1">NATURE SPECIALIST</p>
+                            <p class="text-neutral-500 text-sm mt-3 leading-relaxed">Passionate naturalist with deep knowledge of Namaqualand's unique flora, fauna, and geological formations spanning billions of years.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 cut-lg bg-neutral-900/40 border border-neutral-800 p-8 text-center">
+                <p class="font-heading text-lg text-neutral-400 uppercase tracking-wider">Our Mission</p>
+                <p class="text-neutral-500 text-sm mt-3 max-w-2xl mx-auto leading-relaxed">
+                    To share the raw, unfiltered beauty of Namaqualand with adventurers who seek authentic experiences. Whether the land blooms with wildflowers or rests in drought, there is always beauty to discover.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="py-24 border-t border-neutral-800/50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex items-center gap-4 mb-2">
+                <div class="h-px flex-1 bg-neutral-800"></div>
+                <span class="gps text-[10px] text-neutral-600 tracking-widest">SECTION 04</span>
+                <div class="h-px flex-1 bg-neutral-800"></div>
+            </div>
+            <h2 class="font-display text-5xl md:text-6xl text-white text-center tracking-wide">FROM THE <span class="text-orange-500">FIELD</span></h2>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mt-14">
+                <div class="cut aspect-square overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&q=80" alt="Gallery" class="w-full h-full object-cover opacity-60 group-hover:opacity-90 group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="cut aspect-square overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&q=80" alt="Gallery" class="w-full h-full object-cover opacity-60 group-hover:opacity-90 group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="cut aspect-square overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80" alt="Gallery" class="w-full h-full object-cover opacity-60 group-hover:opacity-90 group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="cut aspect-square overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1472396961693-142e6e269027?w=600&q=80" alt="Gallery" class="w-full h-full object-cover opacity-60 group-hover:opacity-90 group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="cut aspect-square overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=80" alt="Gallery" class="w-full h-full object-cover opacity-60 group-hover:opacity-90 group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="cut aspect-square overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&q=80" alt="Gallery" class="w-full h-full object-cover opacity-60 group-hover:opacity-90 group-hover:scale-105 transition duration-500">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 border-t border-neutral-800/50">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="cut-lg bg-gradient-to-br from-orange-500/10 to-transparent border border-orange-500/20 p-12 md:p-16">
+                <p class="gps text-[10px] text-orange-500 tracking-widest">READY FOR ADVENTURE</p>
+                <h2 class="font-display text-4xl md:text-6xl text-white mt-3 tracking-wide">CHART YOUR <span class="text-orange-500">COURSE</span></h2>
+                <p class="text-neutral-500 mt-4 max-w-md mx-auto text-sm">Book your guided expedition through the untamed beauty of Namaqualand.</p>
+                <a href="#contact" class="cut-btn inline-block mt-8 bg-orange-500 text-white font-heading font-semibold uppercase tracking-wider px-10 py-4 hover:bg-orange-600 transition text-sm">
+                    Send Transmission
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-24 border-t border-neutral-800/50">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="flex items-center gap-4 mb-2">
+                <div class="h-px flex-1 bg-neutral-800"></div>
+                <span class="gps text-[10px] text-neutral-600 tracking-widest">SECTION 05</span>
+                <div class="h-px flex-1 bg-neutral-800"></div>
+            </div>
+            <h2 class="font-display text-5xl md:text-6xl text-white text-center tracking-wide">MAKE <span class="text-orange-500">CONTACT</span></h2>
+            <p class="text-center text-neutral-500 mt-3 text-sm">Establish communication with base camp.</p>
+
+            <div class="grid md:grid-cols-3 gap-4 mt-10 mb-12">
+                <div class="cut bg-neutral-900/60 border border-neutral-800 p-5 text-center">
+                    <div class="gps text-[9px] text-orange-500 tracking-widest mb-2">LOCATION</div>
+                    <p class="text-neutral-400 text-sm">Springbok<br>Northern Cape</p>
+                </div>
+                <div class="cut bg-neutral-900/60 border border-neutral-800 p-5 text-center">
+                    <div class="gps text-[9px] text-orange-500 tracking-widest mb-2">COMMS</div>
+                    <p class="text-neutral-400 text-sm">info@dustdaisies.co.za</p>
+                </div>
+                <div class="cut bg-neutral-900/60 border border-neutral-800 p-5 text-center">
+                    <div class="gps text-[9px] text-orange-500 tracking-widest mb-2">COORDINATES</div>
+                    <p class="text-neutral-400 text-sm">29.6707&deg; S<br>17.8836&deg; E</p>
+                </div>
+            </div>
+
+            <form class="cut-lg bg-neutral-900/60 border border-neutral-800 p-8 space-y-6" @submit.prevent>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="gps text-[10px] text-neutral-500 tracking-widest block mb-2">CALLSIGN</label>
+                        <input type="text" placeholder="Your name" class="cut w-full bg-neutral-800/50 border border-neutral-700 text-neutral-300 px-4 py-3 text-sm placeholder-neutral-600 focus:border-orange-500 focus:outline-none transition">
+                    </div>
+                    <div>
+                        <label class="gps text-[10px] text-neutral-500 tracking-widest block mb-2">FREQUENCY</label>
+                        <input type="email" placeholder="Your email" class="cut w-full bg-neutral-800/50 border border-neutral-700 text-neutral-300 px-4 py-3 text-sm placeholder-neutral-600 focus:border-orange-500 focus:outline-none transition">
+                    </div>
+                </div>
+                <div>
+                    <label class="gps text-[10px] text-neutral-500 tracking-widest block mb-2">TRANSMISSION</label>
+                    <textarea rows="5" placeholder="Your message" class="cut w-full bg-neutral-800/50 border border-neutral-700 text-neutral-300 px-4 py-3 text-sm placeholder-neutral-600 focus:border-orange-500 focus:outline-none transition resize-none"></textarea>
+                </div>
+                <button type="submit" class="cut-btn bg-orange-500 text-white font-heading font-semibold uppercase tracking-wider px-10 py-3 hover:bg-orange-600 transition text-sm">
+                    Send Transmission
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-800/50 py-12">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="font-display text-xl tracking-wider text-neutral-700">DUST <span class="text-orange-500/50">&</span> DAISIES</div>
+            <p class="gps text-[10px] text-neutral-700 tracking-widest">29.6707&deg; S, 17.8836&deg; E &bull; SPRINGBOK, NORTHERN CAPE &bull; 2026</p>
+        </div>
+    </footer>
+
+</body>
+</html>

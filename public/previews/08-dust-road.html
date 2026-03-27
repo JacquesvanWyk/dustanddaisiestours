@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ mobileMenu: false, scrolled: false }" @scroll.window="scrolled = window.scrollY > 60">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dust & Daisies Tours - Dust Road</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FAF7F2',
+                        charcoal: '#2D2A26',
+                        dust: '#C4A882',
+                        terra: '#B5654A',
+                        sage: '#7A8B6F',
+                        mustard: '#D4A843',
+                        brand: '#E87524',
+                    },
+                    fontFamily: {
+                        serif: ['Instrument Serif', 'serif'],
+                        body: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; background: #FAF7F2; }
+
+        .road-stripe {
+            background: repeating-linear-gradient(90deg, #E87524 0, #E87524 20px, transparent 20px, transparent 40px);
+            height: 4px;
+        }
+
+        .road-dashed {
+            background: repeating-linear-gradient(90deg, #C4A882 0, #C4A882 16px, transparent 16px, transparent 32px);
+            height: 2px;
+        }
+
+        .road-dashed-vertical {
+            background: repeating-linear-gradient(180deg, #C4A882 0, #C4A882 12px, transparent 12px, transparent 24px);
+            width: 2px;
+        }
+
+        .wes-frame {
+            border: 2px solid #2D2A26;
+            outline: 2px solid #2D2A26;
+            outline-offset: 5px;
+        }
+
+        .retro-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            border: 1px solid currentColor;
+            padding: 2px 8px;
+            display: inline-block;
+        }
+
+        .mile-marker {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .nav-link .mile-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            opacity: 0.5;
+            margin-right: 4px;
+        }
+    </style>
+</head>
+<body class="text-charcoal">
+
+    <!-- Road Stripe Top -->
+    <div class="road-stripe w-full fixed top-0 z-50"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-1 w-full z-40 transition-all duration-300"
+         :class="scrolled ? 'bg-cream/95 backdrop-blur shadow-sm' : 'bg-transparent'">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="font-serif italic text-2xl tracking-tight text-charcoal">
+                Dust <span class="text-brand">&</span> Daisies
+            </a>
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#home" class="nav-link text-sm font-medium hover:text-brand transition">
+                    <span class="mile-num">01.</span>Home
+                </a>
+                <a href="#tours" class="nav-link text-sm font-medium hover:text-brand transition">
+                    <span class="mile-num">02.</span>Day Tours
+                </a>
+                <a href="#trails" class="nav-link text-sm font-medium hover:text-brand transition">
+                    <span class="mile-num">03.</span>Hiking Trails
+                </a>
+                <a href="#about" class="nav-link text-sm font-medium hover:text-brand transition">
+                    <span class="mile-num">04.</span>About
+                </a>
+                <a href="#gallery" class="nav-link text-sm font-medium hover:text-brand transition">
+                    <span class="mile-num">05.</span>Gallery
+                </a>
+                <a href="#contact" class="nav-link text-sm font-medium hover:text-brand transition">
+                    <span class="mile-num">06.</span>Contact
+                </a>
+            </div>
+            <!-- Mobile Toggle -->
+            <button @click="mobileMenu = !mobileMenu" class="md:hidden text-charcoal">
+                <svg x-show="!mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                <svg x-show="mobileMenu" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div x-show="mobileMenu" x-cloak x-transition class="md:hidden bg-cream border-t border-dust/30 px-6 py-4 space-y-3">
+            <a href="#home" @click="mobileMenu=false" class="block text-sm font-medium"><span class="mile-num">01.</span>Home</a>
+            <a href="#tours" @click="mobileMenu=false" class="block text-sm font-medium"><span class="mile-num">02.</span>Day Tours</a>
+            <a href="#trails" @click="mobileMenu=false" class="block text-sm font-medium"><span class="mile-num">03.</span>Hiking Trails</a>
+            <a href="#about" @click="mobileMenu=false" class="block text-sm font-medium"><span class="mile-num">04.</span>About</a>
+            <a href="#gallery" @click="mobileMenu=false" class="block text-sm font-medium"><span class="mile-num">05.</span>Gallery</a>
+            <a href="#contact" @click="mobileMenu=false" class="block text-sm font-medium"><span class="mile-num">06.</span>Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="home" class="relative min-h-screen flex items-center overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="/images/hero.jpg" alt="Namaqualand landscape" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-charcoal/40"></div>
+        </div>
+        <!-- Dashed road line decoration -->
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 road-dashed-vertical h-24"></div>
+        <div class="relative z-10 max-w-6xl mx-auto px-6 py-32 text-cream">
+            <span class="retro-badge text-cream/80 mb-6">EST. Springbok, Northern Cape</span>
+            <h1 class="font-serif italic text-6xl md:text-8xl mt-6 mb-4 leading-[0.95]">
+                Dust &<br>Daisies
+            </h1>
+            <p class="font-body text-lg md:text-xl max-w-lg text-cream/80 mb-8">
+                Discover beauty in drought or abundance. Guided Namaqualand tours and hiking trails.
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="#tours" class="bg-brand text-cream px-6 py-3 text-sm font-semibold tracking-wide hover:bg-brand/90 transition">
+                    Explore Tours
+                </a>
+                <a href="#contact" class="border border-cream/50 text-cream px-6 py-3 text-sm font-semibold tracking-wide hover:bg-cream/10 transition">
+                    Get in Touch
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Road Stripe Divider -->
+    <div class="road-stripe w-full"></div>
+
+    <!-- About Intro -->
+    <section class="py-20 md:py-28">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+                <div>
+                    <span class="retro-badge text-dust mb-4">About Us</span>
+                    <h2 class="font-serif italic text-4xl md:text-5xl mt-4 mb-6">The Road<br>Less Travelled</h2>
+                    <div class="road-dashed w-16 mb-6"></div>
+                    <p class="text-charcoal/70 leading-relaxed mb-4">
+                        Dust & Daisies offers guided day tours and hiking trails through the breathtaking landscapes of Namaqualand. Based in Springbok, we reveal the Northern Cape's hidden treasures year-round.
+                    </p>
+                    <p class="text-charcoal/70 leading-relaxed">
+                        Whether the veld is carpeted in wildflowers or sculpted by drought, every season tells a story worth discovering.
+                    </p>
+                </div>
+                <div class="relative">
+                    <div class="wes-frame">
+                        <img src="/images/about.jpg" alt="Namaqualand landscape" class="w-full aspect-[4/5] object-cover">
+                    </div>
+                    <div class="absolute -bottom-4 -right-4 bg-mustard text-charcoal retro-badge py-1 px-3">
+                        Since 2018
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day Tours -->
+    <section id="tours" class="bg-charcoal text-cream py-20 md:py-28 relative">
+        <div class="road-dashed w-full absolute top-0 opacity-30"></div>
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="retro-badge text-dust mb-4">Section 02</span>
+                <h2 class="font-serif italic text-4xl md:text-5xl mt-4 mb-4">Day Tours</h2>
+                <p class="text-cream/60 max-w-xl mx-auto">
+                    Four unique routes through Namaqualand's most spectacular landscapes.
+                </p>
+                <div class="road-dashed w-16 mx-auto mt-6 opacity-50"></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8" x-data="{ active: null }">
+                <!-- Tour 1 -->
+                <div class="group cursor-pointer" @mouseenter="active=1" @mouseleave="active=null">
+                    <div class="relative overflow-hidden wes-frame">
+                        <img src="/images/tour1.jpg" alt="Copper Tour" class="w-full aspect-[3/2] object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute top-3 left-3 bg-charcoal/80 text-cream retro-badge">Tour 01</div>
+                    </div>
+                    <h3 class="font-serif italic text-2xl mt-5 mb-2">The Copper Tour</h3>
+                    <p class="text-cream/50 text-sm leading-relaxed">Explore the region's rich mining heritage through historic copper towns and dramatic desert landscapes.</p>
+                </div>
+                <!-- Tour 2 -->
+                <div class="group cursor-pointer" @mouseenter="active=2" @mouseleave="active=null">
+                    <div class="relative overflow-hidden wes-frame">
+                        <img src="/images/tour2.jpg" alt="Kamiesberg Tour" class="w-full aspect-[3/2] object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute top-3 left-3 bg-charcoal/80 text-cream retro-badge">Tour 02</div>
+                    </div>
+                    <h3 class="font-serif italic text-2xl mt-5 mb-2">Kamiesberg Passage</h3>
+                    <p class="text-cream/50 text-sm leading-relaxed">Wind through the misty Kamiesberg mountains, passing quiver trees and traditional Namaqualand villages.</p>
+                </div>
+                <!-- Tour 3 -->
+                <div class="group cursor-pointer" @mouseenter="active=3" @mouseleave="active=null">
+                    <div class="relative overflow-hidden wes-frame">
+                        <img src="/images/tour3.jpg" alt="Flower Hunt" class="w-full aspect-[3/2] object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute top-3 left-3 bg-charcoal/80 text-cream retro-badge">Tour 03</div>
+                    </div>
+                    <h3 class="font-serif italic text-2xl mt-5 mb-2">The Flower Hunt</h3>
+                    <p class="text-cream/50 text-sm leading-relaxed">Chase the season's best wildflower displays with a local guide who knows every secret field.</p>
+                </div>
+                <!-- Tour 4 -->
+                <div class="group cursor-pointer" @mouseenter="active=4" @mouseleave="active=null">
+                    <div class="relative overflow-hidden wes-frame">
+                        <img src="/images/tour4.jpg" alt="Geological Wonder" class="w-full aspect-[3/2] object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute top-3 left-3 bg-charcoal/80 text-cream retro-badge">Tour 04</div>
+                    </div>
+                    <h3 class="font-serif italic text-2xl mt-5 mb-2">Geological Wonder</h3>
+                    <p class="text-cream/50 text-sm leading-relaxed">Discover ancient rock formations and the geological forces that shaped this extraordinary landscape.</p>
+                </div>
+            </div>
+        </div>
+        <div class="road-dashed w-full absolute bottom-0 opacity-30"></div>
+    </section>
+
+    <!-- Road Stripe Divider -->
+    <div class="road-stripe w-full"></div>
+
+    <!-- Hiking Trails -->
+    <section id="trails" class="py-20 md:py-28">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="retro-badge text-terra mb-4">Section 03</span>
+                <h2 class="font-serif italic text-4xl md:text-5xl mt-4 mb-4">Hiking Trails</h2>
+                <p class="text-charcoal/60 max-w-xl mx-auto">
+                    Lace up and hit the trail. Four routes through untouched Namaqualand wilderness.
+                </p>
+                <div class="road-dashed w-16 mx-auto mt-6"></div>
+            </div>
+            <div class="space-y-6" x-data="{ open: null }">
+                <!-- Trail 1 -->
+                <div class="border border-charcoal/15 hover:border-brand/40 transition" @click="open = open === 1 ? null : 1">
+                    <div class="flex items-center justify-between px-6 py-5 cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <span class="font-mono text-xs text-dust">01</span>
+                            <h3 class="font-serif italic text-xl">Goegap Trail</h3>
+                            <span class="retro-badge text-sage hidden sm:inline">Moderate</span>
+                        </div>
+                        <svg class="w-5 h-5 text-charcoal/40 transition" :class="open===1 && 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"/></svg>
+                    </div>
+                    <div x-show="open===1" x-collapse x-cloak class="px-6 pb-5 text-charcoal/60 text-sm leading-relaxed border-t border-charcoal/10 pt-4">
+                        Explore the Goegap Nature Reserve with its incredible succulent diversity. The trail winds through granite koppies and sandy plains, offering spectacular views of the Bushmanland plateau.
+                    </div>
+                </div>
+                <!-- Trail 2 -->
+                <div class="border border-charcoal/15 hover:border-brand/40 transition" @click="open = open === 2 ? null : 2">
+                    <div class="flex items-center justify-between px-6 py-5 cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <span class="font-mono text-xs text-dust">02</span>
+                            <h3 class="font-serif italic text-xl">Lewerberg Trail</h3>
+                            <span class="retro-badge text-terra hidden sm:inline">Challenging</span>
+                        </div>
+                        <svg class="w-5 h-5 text-charcoal/40 transition" :class="open===2 && 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"/></svg>
+                    </div>
+                    <div x-show="open===2" x-collapse x-cloak class="px-6 pb-5 text-charcoal/60 text-sm leading-relaxed border-t border-charcoal/10 pt-4">
+                        A challenging ascent rewarded with panoramic views of the Spektakel Valley. Rocky terrain and indigenous flora make this a favourite for seasoned hikers.
+                    </div>
+                </div>
+                <!-- Trail 3 -->
+                <div class="border border-charcoal/15 hover:border-brand/40 transition" @click="open = open === 3 ? null : 3">
+                    <div class="flex items-center justify-between px-6 py-5 cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <span class="font-mono text-xs text-dust">03</span>
+                            <h3 class="font-serif italic text-xl">Bruinkop Trail</h3>
+                            <span class="retro-badge text-sage hidden sm:inline">Moderate</span>
+                        </div>
+                        <svg class="w-5 h-5 text-charcoal/40 transition" :class="open===3 && 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"/></svg>
+                    </div>
+                    <div x-show="open===3" x-collapse x-cloak class="px-6 pb-5 text-charcoal/60 text-sm leading-relaxed border-t border-charcoal/10 pt-4">
+                        Follow ancient shepherds' paths across Bruinkop's rounded granite hills. Seasonal waterfalls and San rock art sites along the way.
+                    </div>
+                </div>
+                <!-- Trail 4 -->
+                <div class="border border-charcoal/15 hover:border-brand/40 transition" @click="open = open === 4 ? null : 4">
+                    <div class="flex items-center justify-between px-6 py-5 cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <span class="font-mono text-xs text-dust">04</span>
+                            <h3 class="font-serif italic text-xl">Ponder Trail</h3>
+                            <span class="retro-badge text-mustard hidden sm:inline">Easy</span>
+                        </div>
+                        <svg class="w-5 h-5 text-charcoal/40 transition" :class="open===4 && 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"/></svg>
+                    </div>
+                    <div x-show="open===4" x-collapse x-cloak class="px-6 pb-5 text-charcoal/60 text-sm leading-relaxed border-t border-charcoal/10 pt-4">
+                        A gentle, contemplative walk through fynbos and succulent gardens. Perfect for families and those seeking a peaceful communion with nature.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="relative py-20 overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="/images/cta.jpg" alt="Namaqualand road" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-charcoal/60"></div>
+        </div>
+        <div class="road-stripe w-full absolute top-0"></div>
+        <div class="relative z-10 max-w-3xl mx-auto px-6 text-center text-cream">
+            <span class="retro-badge text-mustard mb-4">Book Now</span>
+            <h2 class="font-serif italic text-4xl md:text-5xl mt-4 mb-6">Ready for the<br>Open Road?</h2>
+            <p class="text-cream/70 mb-8 max-w-lg mx-auto">
+                Join us for an unforgettable journey through Namaqualand. Private and group tours available year-round.
+            </p>
+            <a href="#contact" class="inline-block bg-brand text-cream px-8 py-3 text-sm font-semibold tracking-wide hover:bg-brand/90 transition">
+                Plan Your Trip
+            </a>
+        </div>
+        <div class="road-stripe w-full absolute bottom-0"></div>
+    </section>
+
+    <!-- About / Guides -->
+    <section id="about" class="py-20 md:py-28">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="retro-badge text-dust mb-4">Section 04</span>
+                <h2 class="font-serif italic text-4xl md:text-5xl mt-4 mb-4">Your Guides</h2>
+                <div class="road-dashed w-16 mx-auto mt-4"></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+                <div class="text-center">
+                    <div class="w-48 h-48 mx-auto rounded-full wes-frame overflow-hidden mb-6" style="outline-offset:6px; border-radius:9999px;">
+                        <img src="/images/gallery1.jpg" alt="Nicky Morris" class="w-full h-full object-cover">
+                    </div>
+                    <span class="retro-badge text-terra mb-3">Culture Guide</span>
+                    <h3 class="font-serif italic text-2xl mt-3 mb-2">Nicky Morris</h3>
+                    <p class="text-charcoal/60 text-sm leading-relaxed max-w-xs mx-auto">
+                        A storyteller at heart, Nicky brings Namaqualand's cultural heritage alive through the people, places, and traditions of the Northern Cape.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="w-48 h-48 mx-auto rounded-full wes-frame overflow-hidden mb-6" style="outline-offset:6px; border-radius:9999px;">
+                        <img src="/images/gallery2.jpg" alt="Elmarie Heyns" class="w-full h-full object-cover">
+                    </div>
+                    <span class="retro-badge text-sage mb-3">Nature Guide</span>
+                    <h3 class="font-serif italic text-2xl mt-3 mb-2">Elmarie Heyns</h3>
+                    <p class="text-charcoal/60 text-sm leading-relaxed max-w-xs mx-auto">
+                        A botanist and nature enthusiast, Elmarie reveals the ecological wonders hidden in every rocky outcrop and sandy plain.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="bg-charcoal text-cream py-20 md:py-28 relative">
+        <div class="road-stripe w-full absolute top-0"></div>
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="retro-badge text-mustard mb-4">Section 05</span>
+                <h2 class="font-serif italic text-4xl md:text-5xl mt-4 mb-4">Gallery</h2>
+                <div class="road-dashed w-16 mx-auto mt-4 opacity-40"></div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="wes-frame overflow-hidden">
+                    <img src="/images/gallery1.jpg" alt="Gallery" class="w-full aspect-square object-cover hover:scale-105 transition duration-500">
+                </div>
+                <div class="wes-frame overflow-hidden">
+                    <img src="/images/gallery2.jpg" alt="Gallery" class="w-full aspect-square object-cover hover:scale-105 transition duration-500">
+                </div>
+                <div class="wes-frame overflow-hidden">
+                    <img src="/images/gallery3.jpg" alt="Gallery" class="w-full aspect-square object-cover hover:scale-105 transition duration-500">
+                </div>
+                <div class="wes-frame overflow-hidden">
+                    <img src="/images/tour1.jpg" alt="Gallery" class="w-full aspect-square object-cover hover:scale-105 transition duration-500">
+                </div>
+                <div class="wes-frame overflow-hidden">
+                    <img src="/images/tour2.jpg" alt="Gallery" class="w-full aspect-square object-cover hover:scale-105 transition duration-500">
+                </div>
+                <div class="wes-frame overflow-hidden">
+                    <img src="/images/tour3.jpg" alt="Gallery" class="w-full aspect-square object-cover hover:scale-105 transition duration-500">
+                </div>
+            </div>
+        </div>
+        <div class="road-stripe w-full absolute bottom-0"></div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-20 md:py-28">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 md:gap-16">
+                <div>
+                    <span class="retro-badge text-dust mb-4">Section 06</span>
+                    <h2 class="font-serif italic text-4xl md:text-5xl mt-4 mb-6">Get in Touch</h2>
+                    <div class="road-dashed w-16 mb-6"></div>
+                    <div class="space-y-4 text-charcoal/70 text-sm">
+                        <div class="flex items-start gap-3">
+                            <span class="font-mono text-xs text-dust mt-0.5">LOC</span>
+                            <span>Springbok, Northern Cape, South Africa</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="font-mono text-xs text-dust mt-0.5">TEL</span>
+                            <span>+27 27 712 1234</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="font-mono text-xs text-dust mt-0.5">MAL</span>
+                            <span>info@dustanddaisies.co.za</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <form class="space-y-4">
+                        <div>
+                            <label class="font-mono text-xs text-dust block mb-1">NAME</label>
+                            <input type="text" class="w-full bg-transparent border border-charcoal/20 px-4 py-3 text-sm focus:border-brand focus:outline-none transition">
+                        </div>
+                        <div>
+                            <label class="font-mono text-xs text-dust block mb-1">EMAIL</label>
+                            <input type="email" class="w-full bg-transparent border border-charcoal/20 px-4 py-3 text-sm focus:border-brand focus:outline-none transition">
+                        </div>
+                        <div>
+                            <label class="font-mono text-xs text-dust block mb-1">MESSAGE</label>
+                            <textarea rows="4" class="w-full bg-transparent border border-charcoal/20 px-4 py-3 text-sm focus:border-brand focus:outline-none transition resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="bg-brand text-cream px-8 py-3 text-sm font-semibold tracking-wide hover:bg-brand/90 transition">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal text-cream/50 relative">
+        <div class="road-stripe w-full"></div>
+        <div class="max-w-6xl mx-auto px-6 py-12">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-6">
+                    <span class="font-serif italic text-xl text-cream">Dust <span class="text-brand">&</span> Daisies</span>
+                    <div class="road-dashed-vertical h-6 hidden md:block"></div>
+                    <span class="text-xs">Springbok, Northern Cape</span>
+                </div>
+                <div class="flex items-center gap-6">
+                    <span class="mile-marker text-xs text-dust/60 border border-dust/30 px-3 py-1">KM 347</span>
+                    <span class="text-xs">&copy; 2026 Dust & Daisies Tours</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

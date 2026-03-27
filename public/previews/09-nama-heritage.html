@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ mobileMenu: false, scrolled: false }" @scroll.window="scrolled = window.scrollY > 50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dust & Daisies Tours - Nama Heritage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ochre: '#E87524',
+                        sienna: '#A86E3E',
+                        earth: '#3D2F28',
+                        sand: '#F5E6D3',
+                        dust: '#EDD9C4',
+                        cream: '#FFF8F0',
+                    },
+                    fontFamily: {
+                        display: ['Cinzel', 'serif'],
+                        body: ['Nunito Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { border-radius: 0 !important; }
+
+        /* Dot pattern backgrounds */
+        .dot-pattern {
+            background-image: radial-gradient(circle, #E87524 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .dot-pattern-light {
+            background-image: radial-gradient(circle, rgba(232,117,36,0.15) 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+        .dot-pattern-dark {
+            background-image: radial-gradient(circle, rgba(61,47,40,0.2) 1px, transparent 1px);
+            background-size: 18px 18px;
+        }
+
+        /* Zigzag border strips */
+        .zigzag-top {
+            position: relative;
+        }
+        .zigzag-top::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 14px;
+            background: linear-gradient(135deg, #E87524 25%, transparent 25%) -7px 0,
+                        linear-gradient(225deg, #E87524 25%, transparent 25%) -7px 0,
+                        linear-gradient(315deg, #E87524 25%, transparent 25%),
+                        linear-gradient(45deg, #E87524 25%, transparent 25%);
+            background-size: 14px 14px;
+            background-color: transparent;
+        }
+        .zigzag-bottom {
+            position: relative;
+        }
+        .zigzag-bottom::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 14px;
+            background: linear-gradient(135deg, #3D2F28 25%, transparent 25%) -7px 0,
+                        linear-gradient(225deg, #3D2F28 25%, transparent 25%) -7px 0,
+                        linear-gradient(315deg, #3D2F28 25%, transparent 25%),
+                        linear-gradient(45deg, #3D2F28 25%, transparent 25%);
+            background-size: 14px 14px;
+        }
+
+        /* Diamond pattern */
+        .diamond-pattern {
+            background:
+                linear-gradient(45deg, rgba(168,110,62,0.08) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(168,110,62,0.08) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(168,110,62,0.08) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(168,110,62,0.08) 75%);
+            background-size: 30px 30px;
+            background-position: 0 0, 0 15px, 15px -15px, -15px 0;
+        }
+
+        /* Dot-motif heading underline */
+        .dot-underline::after {
+            content: '';
+            display: block;
+            margin-top: 12px;
+            height: 6px;
+            width: 120px;
+            background-image: radial-gradient(circle, #E87524 3px, transparent 3px);
+            background-size: 12px 6px;
+        }
+        .dot-underline-center::after {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Geometric L-shaped corner accents */
+        .corner-accent {
+            position: relative;
+        }
+        .corner-accent::before {
+            content: '';
+            position: absolute;
+            top: -6px; left: -6px;
+            width: 40px; height: 40px;
+            border-top: 4px solid #E87524;
+            border-left: 4px solid #E87524;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .corner-accent::after {
+            content: '';
+            position: absolute;
+            bottom: -6px; right: -6px;
+            width: 40px; height: 40px;
+            border-bottom: 4px solid #E87524;
+            border-right: 4px solid #E87524;
+            z-index: 10;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="font-body text-earth bg-cream">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300"
+         :class="scrolled ? 'bg-earth/95 backdrop-blur shadow-lg' : 'bg-transparent'">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
+            <a href="#" class="font-display text-xl font-bold" :class="scrolled ? 'text-ochre' : 'text-white'">
+                Dust & Daisies
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <template x-for="item in ['Home','Day Tours','Hiking Trails','About','Gallery','Contact']">
+                    <a href="#" class="font-body text-xs font-semibold uppercase tracking-[0.2em] transition-colors"
+                       :class="scrolled ? 'text-sand hover:text-ochre' : 'text-white/90 hover:text-ochre'"
+                       x-text="item"></a>
+                </template>
+            </div>
+            <button @click="mobileMenu = !mobileMenu" class="md:hidden" :class="scrolled ? 'text-sand' : 'text-white'">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="square" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile menu -->
+        <div x-show="mobileMenu" x-transition class="md:hidden bg-earth border-t border-sienna/30">
+            <template x-for="item in ['Home','Day Tours','Hiking Trails','About','Gallery','Contact']">
+                <a href="#" class="block px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-sand hover:text-ochre hover:bg-earth/80" x-text="item"></a>
+            </template>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden zigzag-bottom">
+        <div class="absolute inset-0">
+            <img src="/images/hero.jpg" alt="Namaqualand landscape" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-b from-earth/70 via-earth/40 to-earth/80"></div>
+            <div class="absolute inset-0 dot-pattern-dark opacity-30"></div>
+        </div>
+        <div class="relative z-10 text-center px-6 max-w-4xl">
+            <div class="inline-block mb-6">
+                <span class="text-xs font-semibold uppercase tracking-[0.3em] text-ochre border border-ochre px-4 py-2">
+                    Springbok, Northern Cape
+                </span>
+            </div>
+            <h1 class="font-display text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
+                Dust & Daisies<br>
+                <span class="text-ochre">Tours</span>
+            </h1>
+            <p class="font-body text-lg md:text-xl text-sand/90 max-w-2xl mx-auto mb-10 leading-relaxed">
+                Discover beauty in drought or abundance. Guided Namaqualand tours and hiking trails through ancient landscapes.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#tours" class="bg-ochre text-white font-semibold uppercase tracking-widest text-sm px-8 py-4 hover:bg-sienna transition-colors">
+                    Explore Tours
+                </a>
+                <a href="#contact" class="border-2 border-sand text-sand font-semibold uppercase tracking-widest text-sm px-8 py-4 hover:bg-sand hover:text-earth transition-colors">
+                    Get in Touch
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-24 diamond-pattern relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-[0.3em] text-ochre mb-4 block">Who We Are</span>
+                    <h2 class="font-display text-4xl font-bold text-earth mb-2 dot-underline">About Us</h2>
+                    <div class="mb-8"></div>
+                    <p class="text-earth/80 leading-relaxed mb-6">
+                        Dust & Daisies Tours offers authentic Namaqualand experiences led by passionate local guides.
+                        From the famous spring wildflower carpets to the rugged copper-rich mountains, we reveal the
+                        Northern Cape's hidden treasures.
+                    </p>
+                    <p class="text-earth/80 leading-relaxed mb-8">
+                        Our guides Nicky Morris and Elmarie Heyns bring decades of combined knowledge in local culture,
+                        botany, geology, and the rich Nama heritage of this ancient landscape.
+                    </p>
+                    <div class="flex gap-8">
+                        <div class="text-center">
+                            <div class="font-display text-3xl font-bold text-ochre">15+</div>
+                            <div class="text-xs uppercase tracking-widest text-sienna mt-1">Years Experience</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="font-display text-3xl font-bold text-ochre">4</div>
+                            <div class="text-xs uppercase tracking-widest text-sienna mt-1">Day Tours</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="font-display text-3xl font-bold text-ochre">4</div>
+                            <div class="text-xs uppercase tracking-widest text-sienna mt-1">Hiking Trails</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="corner-accent">
+                    <img src="/images/about.jpg" alt="About Dust and Daisies" class="w-full aspect-[4/5] object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Zigzag divider -->
+    <div class="h-14 bg-earth relative zigzag-top"></div>
+
+    <!-- Day Tours -->
+    <section id="tours" class="bg-earth py-24 relative dot-pattern-dark">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-xs font-semibold uppercase tracking-[0.3em] text-ochre mb-4 block">Explore Namaqualand</span>
+                <h2 class="font-display text-4xl font-bold text-sand dot-underline dot-underline-center">Day Tours</h2>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" x-data>
+                <template x-for="(tour, i) in [
+                    { title: 'Copper Tour', desc: 'Explore Springbok\'s copper mining heritage and the historic Blue Mine.', img: '/images/tour1.jpg' },
+                    { title: 'Kamiesberg', desc: 'Journey through the misty Kamiesberg mountains and their unique flora.', img: '/images/tour2.jpg' },
+                    { title: 'Flower Hunt', desc: 'Chase the famous Namaqualand wildflower blooms with expert guides.', img: '/images/tour3.jpg' },
+                    { title: 'Geological Wonder', desc: 'Discover ancient rock formations and the region\'s geological story.', img: '/images/tour4.jpg' }
+                ]">
+                    <div class="group bg-earth border border-sienna/30 overflow-hidden hover:border-ochre transition-colors">
+                        <div class="relative overflow-hidden aspect-[4/3]">
+                            <img :src="tour.img" :alt="tour.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-ochre m-3"></div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-display text-lg font-bold text-sand mb-2" x-text="tour.title"></h3>
+                            <p class="text-sand/60 text-sm leading-relaxed" x-text="tour.desc"></p>
+                            <a href="#" class="inline-block mt-4 text-ochre text-xs font-semibold uppercase tracking-widest hover:text-sand transition-colors">
+                                Learn More &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Zigzag divider -->
+    <div class="h-14 bg-cream relative">
+        <div class="absolute top-0 left-0 right-0 h-[14px]" style="background: linear-gradient(135deg, #3D2F28 25%, transparent 25%) -7px 0, linear-gradient(225deg, #3D2F28 25%, transparent 25%) -7px 0, linear-gradient(315deg, #3D2F28 25%, transparent 25%), linear-gradient(45deg, #3D2F28 25%, transparent 25%); background-size: 14px 14px;"></div>
+    </div>
+
+    <!-- Hiking Trails -->
+    <section class="py-24 bg-cream dot-pattern-light relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-xs font-semibold uppercase tracking-[0.3em] text-ochre mb-4 block">Walk the Ancient Paths</span>
+                <h2 class="font-display text-4xl font-bold text-earth dot-underline dot-underline-center">Hiking Trails</h2>
+            </div>
+            <div class="space-y-8" x-data>
+                <template x-for="(trail, i) in [
+                    { name: 'Goegap Trail', difficulty: 'Moderate', duration: '4-5 hours', desc: 'Wind through the Goegap Nature Reserve, home to diverse succulents and wildlife.' },
+                    { name: 'Lewerberg Trail', difficulty: 'Challenging', duration: '6-7 hours', desc: 'Summit the Lewerberg for panoramic views of the Namaqualand plains.' },
+                    { name: 'Bruinkop Trail', difficulty: 'Easy', duration: '2-3 hours', desc: 'A gentle walk through granite koppies with stunning sunset viewpoints.' },
+                    { name: 'Ponder Trail', difficulty: 'Moderate', duration: '3-4 hours', desc: 'A contemplative trail through ancient rock formations and quiver tree forests.' }
+                ]">
+                    <div class="bg-white border border-sienna/20 p-8 flex flex-col md:flex-row md:items-center gap-6 hover:border-ochre transition-colors group">
+                        <div class="flex-shrink-0 w-16 h-16 bg-ochre/10 flex items-center justify-center">
+                            <span class="font-display text-2xl font-bold text-ochre" x-text="'0' + (i+1)"></span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-display text-xl font-bold text-earth mb-1" x-text="trail.name"></h3>
+                            <p class="text-earth/70 text-sm leading-relaxed" x-text="trail.desc"></p>
+                        </div>
+                        <div class="flex gap-6 flex-shrink-0">
+                            <div class="text-center">
+                                <div class="text-xs uppercase tracking-widest text-sienna">Difficulty</div>
+                                <div class="font-semibold text-earth text-sm mt-1" x-text="trail.difficulty"></div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-xs uppercase tracking-widest text-sienna">Duration</div>
+                                <div class="font-semibold text-earth text-sm mt-1" x-text="trail.duration"></div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="relative py-20 overflow-hidden zigzag-top">
+        <div class="absolute inset-0">
+            <img src="/images/cta.jpg" alt="Namaqualand flowers" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-ochre/85"></div>
+            <div class="absolute inset-0 dot-pattern opacity-10"></div>
+        </div>
+        <div class="relative z-10 max-w-3xl mx-auto text-center px-6 pt-4">
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-6">
+                Ready for an Adventure?
+            </h2>
+            <p class="text-white/90 text-lg mb-10 leading-relaxed">
+                Book your Namaqualand experience today. Whether chasing wildflowers or conquering mountain trails, unforgettable moments await.
+            </p>
+            <a href="#contact" class="inline-block bg-earth text-sand font-semibold uppercase tracking-widest text-sm px-10 py-4 hover:bg-earth/80 transition-colors">
+                Book Now
+            </a>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="py-24 bg-sand diamond-pattern">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-xs font-semibold uppercase tracking-[0.3em] text-ochre mb-4 block">Captured Moments</span>
+                <h2 class="font-display text-4xl font-bold text-earth dot-underline dot-underline-center">Gallery</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="corner-accent">
+                    <img src="/images/gallery1.jpg" alt="Gallery 1" class="w-full aspect-square object-cover">
+                </div>
+                <div class="md:row-span-2">
+                    <img src="/images/gallery2.jpg" alt="Gallery 2" class="w-full h-full object-cover">
+                </div>
+                <div class="corner-accent">
+                    <img src="/images/gallery3.jpg" alt="Gallery 3" class="w-full aspect-square object-cover">
+                </div>
+                <div>
+                    <img src="/images/tour1.jpg" alt="Tour scenery" class="w-full aspect-square object-cover">
+                </div>
+                <div>
+                    <img src="/images/tour2.jpg" alt="Mountain views" class="w-full aspect-square object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="bg-earth py-24 relative dot-pattern-dark zigzag-top">
+        <div class="max-w-7xl mx-auto px-6 pt-4">
+            <div class="grid md:grid-cols-2 gap-16">
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-[0.3em] text-ochre mb-4 block">Get in Touch</span>
+                    <h2 class="font-display text-4xl font-bold text-sand dot-underline mb-8">Contact Us</h2>
+                    <div class="space-y-6 mt-10">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-ochre/20 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-ochre" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="square" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            </div>
+                            <div>
+                                <div class="text-xs uppercase tracking-widest text-sienna mb-1">Location</div>
+                                <div class="text-sand">Springbok, Northern Cape, South Africa</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-ochre/20 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-ochre" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            </div>
+                            <div>
+                                <div class="text-xs uppercase tracking-widest text-sienna mb-1">Email</div>
+                                <div class="text-sand">info@dustdaisies.co.za</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-ochre/20 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-ochre" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            </div>
+                            <div>
+                                <div class="text-xs uppercase tracking-widest text-sienna mb-1">Phone</div>
+                                <div class="text-sand">+27 27 712 1234</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <form class="space-y-5">
+                        <div>
+                            <label class="text-xs uppercase tracking-widest text-sienna block mb-2">Name</label>
+                            <input type="text" class="w-full bg-transparent border border-sienna/40 text-sand px-4 py-3 focus:border-ochre focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="text-xs uppercase tracking-widest text-sienna block mb-2">Email</label>
+                            <input type="email" class="w-full bg-transparent border border-sienna/40 text-sand px-4 py-3 focus:border-ochre focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="text-xs uppercase tracking-widest text-sienna block mb-2">Tour Interest</label>
+                            <select class="w-full bg-earth border border-sienna/40 text-sand px-4 py-3 focus:border-ochre focus:outline-none">
+                                <option>Select a tour...</option>
+                                <option>Copper Tour</option>
+                                <option>Kamiesberg</option>
+                                <option>Flower Hunt</option>
+                                <option>Geological Wonder</option>
+                                <option>Hiking Trail</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-xs uppercase tracking-widest text-sienna block mb-2">Message</label>
+                            <textarea rows="4" class="w-full bg-transparent border border-sienna/40 text-sand px-4 py-3 focus:border-ochre focus:outline-none resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-ochre text-white font-semibold uppercase tracking-widest text-sm py-4 hover:bg-sienna transition-colors">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-earth border-t border-sienna/20 py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="font-display text-xl font-bold text-ochre">Dust & Daisies</div>
+                <div class="flex gap-8">
+                    <template x-data x-for="item in ['Home','Tours','Trails','About','Gallery','Contact']">
+                        <a href="#" class="text-xs font-semibold uppercase tracking-[0.2em] text-sand/60 hover:text-ochre transition-colors" x-text="item"></a>
+                    </template>
+                </div>
+                <div class="text-sand/40 text-sm">&copy; 2026 Dust & Daisies Tours</div>
+            </div>
+            <div class="mt-8 flex justify-center">
+                <div class="h-[6px] w-32" style="background-image: radial-gradient(circle, #E87524 3px, transparent 3px); background-size: 12px 6px;"></div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

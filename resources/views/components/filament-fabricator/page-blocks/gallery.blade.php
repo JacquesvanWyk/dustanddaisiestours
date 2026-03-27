@@ -1,6 +1,6 @@
 @aware(['page'])
 
-<section class="bg-parchment py-20" x-data="{
+<section class="bg-sand py-24" x-data="{
     open: false,
     current: 0,
     images: {{ Js::from(collect($images ?? [])->filter(fn($i) => $i['image'] ?? null)->values()) }},
@@ -12,28 +12,25 @@
     next() { this.current = (this.current + 1) % this.total },
     prev() { this.current = (this.current - 1 + this.total) % this.total },
 }" @keydown.escape.window="open = false" @keydown.right.window="open && next()" @keydown.left.window="open && prev()">
-    <div class="max-w-6xl mx-auto px-4">
+    <div class="max-w-7xl mx-auto px-6">
         @if($heading ?? null)
-            <div class="text-center mb-12">
-                <p class="font-handwriting text-xl text-brand mb-1">From the Field</p>
-                <h2 class="text-3xl md:text-4xl font-bold">{{ $heading }}</h2>
-                <div class="w-16 h-0.5 bg-brand mx-auto mt-4"></div>
+            <div class="text-center mb-14">
+                <h2 class="font-accent text-4xl md:text-5xl text-brand">{{ $heading }}</h2>
+                <div class="section-divider mt-4"></div>
             </div>
         @endif
         @if($images ?? null)
-            @php $tilts = ['photo-tilt-left', 'photo-tilt-right', 'photo-tilt-slight']; @endphp
             <div class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
                 @foreach($images as $i => $item)
                     @php $src = $item['image'] ?? null; @endphp
                     @if($src)
-                        <div class="break-inside-avoid washi-tape {{ $tilts[$i % 3] }} cursor-pointer group"
-                             @click="show({{ $i }})">
+                        <div class="break-inside-avoid gallery-item" @click="show({{ $i }})">
                             <img src="{{ Storage::url($src) }}"
                                  alt="{{ $item['alt'] ?? 'Gallery image ' . ($i + 1) }}"
-                                 class="journal-photo w-full object-cover shadow-md transition duration-300 group-hover:sepia-0"
+                                 class="w-full object-cover"
                                  loading="lazy">
                             @if($item['caption'] ?? null)
-                                <p class="font-handwriting text-sm text-center mt-2 text-stone-600">{{ $item['caption'] }}</p>
+                                <p class="absolute bottom-0 left-0 right-0 p-3 text-white text-sm font-accent text-lg z-10 opacity-0 group-hover:opacity-100 transition">{{ $item['caption'] }}</p>
                             @endif
                         </div>
                     @endif
@@ -45,19 +42,19 @@
     {{-- Lightbox --}}
     <template x-teleport="body">
         <div x-show="open" x-transition.opacity.duration.200ms
-             class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+             class="fixed inset-0 z-50 flex items-center justify-center bg-ink/95 backdrop-blur-sm p-4"
              @click.self="open = false">
 
-            <button @click="open = false" class="absolute top-4 right-4 text-white/70 hover:text-white text-3xl z-10">&times;</button>
+            <button @click="open = false" class="absolute top-6 right-6 text-sand/60 hover:text-white text-2xl z-10 w-10 h-10 flex items-center justify-center border border-sand/20 hover:border-sand/40 transition">&times;</button>
 
-            <button @click="prev()" class="absolute left-4 text-white/70 hover:text-white text-4xl z-10 select-none">&lsaquo;</button>
-            <button @click="next()" class="absolute right-4 text-white/70 hover:text-white text-4xl z-10 select-none">&rsaquo;</button>
+            <button @click="prev()" class="absolute left-6 text-sand/60 hover:text-white text-3xl z-10 w-12 h-12 flex items-center justify-center border border-sand/20 hover:border-sand/40 transition">&lsaquo;</button>
+            <button @click="next()" class="absolute right-6 text-sand/60 hover:text-white text-3xl z-10 w-12 h-12 flex items-center justify-center border border-sand/20 hover:border-sand/40 transition">&rsaquo;</button>
 
-            <div class="max-w-4xl max-h-[85vh] flex flex-col items-center">
-                <img :src="src" :alt="alt" class="max-h-[75vh] max-w-full object-contain rounded shadow-2xl">
-                <div class="mt-4 text-center">
-                    <p x-show="caption" x-text="caption" class="font-handwriting text-lg text-white/90 mb-1"></p>
-                    <p class="text-white/50 text-sm" x-text="(current + 1) + ' / ' + total"></p>
+            <div class="max-w-5xl max-h-[85vh] flex flex-col items-center">
+                <img :src="src" :alt="alt" class="max-h-[75vh] max-w-full object-contain shadow-2xl">
+                <div class="mt-5 text-center">
+                    <p x-show="caption" x-text="caption" class="font-accent text-xl text-sand/80 mb-1"></p>
+                    <p class="text-sand/30 text-xs uppercase tracking-widest" x-text="(current + 1) + ' / ' + total"></p>
                 </div>
             </div>
         </div>

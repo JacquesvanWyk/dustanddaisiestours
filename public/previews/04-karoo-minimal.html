@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ mobileMenu: false, activeAccordion: null }" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dust &amp; Daisies Tours &mdash; Namaqualand</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sand: '#FAF7F2',
+                        copper: '#E87524',
+                        stone: '#8C8073',
+                        dark: '#2A2520',
+                    },
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['DM Sans', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        [x-cloak] { display: none !important; }
+        .label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; }
+        .btn-minimal {
+            display: inline-block; border: 1px solid currentColor; padding: 0.75rem 2rem;
+            font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .btn-minimal:hover { background: #2A2520; color: #FAF7F2; border-color: #2A2520; }
+        .line { height: 1px; background: rgba(42,37,32,0.12); }
+    </style>
+</head>
+<body class="bg-sand text-dark font-sans font-light antialiased">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 inset-x-0 z-50 bg-sand/90 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="flex items-center justify-between h-16">
+                <a href="#" class="font-serif text-xl font-light tracking-wide">Dust &amp; Daisies</a>
+                <div class="hidden md:flex items-center gap-10">
+                    <a href="#tours" class="label text-stone hover:text-dark transition">Tours</a>
+                    <a href="#trails" class="label text-stone hover:text-dark transition">Trails</a>
+                    <a href="#about" class="label text-stone hover:text-dark transition">About</a>
+                    <a href="#gallery" class="label text-stone hover:text-dark transition">Gallery</a>
+                    <a href="#contact" class="label text-stone hover:text-dark transition">Contact</a>
+                </div>
+                <button @click="mobileMenu = !mobileMenu" class="md:hidden label text-stone">Menu</button>
+            </div>
+        </div>
+        <div class="line"></div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div x-show="mobileMenu" x-cloak x-transition.opacity class="fixed inset-0 z-40 bg-sand flex flex-col items-center justify-center gap-8 md:hidden">
+        <button @click="mobileMenu = false" class="absolute top-5 right-6 label text-stone">Close</button>
+        <a @click="mobileMenu = false" href="#tours" class="font-serif text-3xl font-light">Tours</a>
+        <a @click="mobileMenu = false" href="#trails" class="font-serif text-3xl font-light">Trails</a>
+        <a @click="mobileMenu = false" href="#about" class="font-serif text-3xl font-light">About</a>
+        <a @click="mobileMenu = false" href="#gallery" class="font-serif text-3xl font-light">Gallery</a>
+        <a @click="mobileMenu = false" href="#contact" class="font-serif text-3xl font-light">Contact</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="relative h-[90vh] flex items-end">
+        <img src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=1600&q=80"
+             alt="Namaqualand landscape" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-dark/60 via-dark/10 to-transparent"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 pb-20 w-full">
+            <div class="max-w-xl">
+                <p class="label text-white/70 mb-4">Springbok, Northern Cape</p>
+                <h1 class="font-serif text-5xl md:text-7xl font-light text-white leading-[0.95]">
+                    Discover beauty<br>in drought<br>or abundance
+                </h1>
+                <div class="mt-10">
+                    <a href="#tours" class="btn-minimal text-white border-white/50 hover:bg-white hover:text-dark hover:border-white">Explore Tours</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Intro -->
+    <section class="py-32">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-12 gap-6">
+                <div class="col-span-12 md:col-span-4">
+                    <p class="label text-stone">About</p>
+                </div>
+                <div class="col-span-12 md:col-span-8">
+                    <h2 class="font-serif text-3xl md:text-5xl font-light leading-tight">
+                        Guided experiences through Namaqualand's ancient landscapes,
+                        where the desert reveals its secrets to those who walk softly.
+                    </h2>
+                    <div class="line my-12"></div>
+                    <p class="text-stone max-w-lg leading-relaxed">
+                        Led by expert guides Nicky Morris and Elmarie Heyns, our tours blend
+                        cultural heritage with natural wonder. From seasonal wildflower spectacles
+                        to geological marvels billions of years old.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day Tours -->
+    <section id="tours" class="pb-32">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-12 gap-6 mb-16">
+                <div class="col-span-12 md:col-span-4">
+                    <p class="label text-stone">01 / Day Tours</p>
+                </div>
+                <div class="col-span-12 md:col-span-8">
+                    <h2 class="font-serif text-3xl md:text-4xl font-light">Curated journeys through time and terrain</h2>
+                </div>
+            </div>
+
+            <div class="space-y-px">
+                <!-- Tour 1 -->
+                <div class="group">
+                    <div class="line"></div>
+                    <div class="grid grid-cols-12 gap-6 py-8 items-center">
+                        <div class="col-span-12 md:col-span-4">
+                            <div class="overflow-hidden aspect-[4/3]">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80"
+                                     alt="Copper Tour" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            </div>
+                        </div>
+                        <div class="col-span-12 md:col-span-5">
+                            <p class="label text-stone mb-2">Cultural Heritage</p>
+                            <h3 class="font-serif text-2xl font-light">Copper Tour</h3>
+                            <p class="text-stone mt-3 text-sm leading-relaxed">Trace the history of copper mining through Springbok's heritage sites and the Nababeep Mine Museum.</p>
+                        </div>
+                        <div class="col-span-12 md:col-span-3 md:text-right">
+                            <a href="#contact" class="btn-minimal text-dark">Enquire</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tour 2 -->
+                <div class="group">
+                    <div class="line"></div>
+                    <div class="grid grid-cols-12 gap-6 py-8 items-center">
+                        <div class="col-span-12 md:col-span-4">
+                            <div class="overflow-hidden aspect-[4/3]">
+                                <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&q=80"
+                                     alt="Kamiesberg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            </div>
+                        </div>
+                        <div class="col-span-12 md:col-span-5">
+                            <p class="label text-stone mb-2">Mountain Escape</p>
+                            <h3 class="font-serif text-2xl font-light">Kamiesberg</h3>
+                            <p class="text-stone mt-3 text-sm leading-relaxed">Journey through the misty Kamiesberg mountains, discovering endemic fynbos and remote farming communities.</p>
+                        </div>
+                        <div class="col-span-12 md:col-span-3 md:text-right">
+                            <a href="#contact" class="btn-minimal text-dark">Enquire</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tour 3 -->
+                <div class="group">
+                    <div class="line"></div>
+                    <div class="grid grid-cols-12 gap-6 py-8 items-center">
+                        <div class="col-span-12 md:col-span-4">
+                            <div class="overflow-hidden aspect-[4/3]">
+                                <img src="https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=600&q=80"
+                                     alt="Flower Hunt" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            </div>
+                        </div>
+                        <div class="col-span-12 md:col-span-5">
+                            <p class="label text-stone mb-2">Seasonal</p>
+                            <h3 class="font-serif text-2xl font-light">Flower Hunt</h3>
+                            <p class="text-stone mt-3 text-sm leading-relaxed">Chase the legendary Namaqualand wildflower bloom across sun-drenched valleys and hillsides.</p>
+                        </div>
+                        <div class="col-span-12 md:col-span-3 md:text-right">
+                            <a href="#contact" class="btn-minimal text-dark">Enquire</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tour 4 -->
+                <div class="group">
+                    <div class="line"></div>
+                    <div class="grid grid-cols-12 gap-6 py-8 items-center">
+                        <div class="col-span-12 md:col-span-4">
+                            <div class="overflow-hidden aspect-[4/3]">
+                                <img src="https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=600&q=80"
+                                     alt="Geological Wonder" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            </div>
+                        </div>
+                        <div class="col-span-12 md:col-span-5">
+                            <p class="label text-stone mb-2">Earth Science</p>
+                            <h3 class="font-serif text-2xl font-light">Geological Wonder</h3>
+                            <p class="text-stone mt-3 text-sm leading-relaxed">Explore rock formations spanning billions of years, from ancient gneiss to dramatic quartz veins.</p>
+                        </div>
+                        <div class="col-span-12 md:col-span-3 md:text-right">
+                            <a href="#contact" class="btn-minimal text-dark">Enquire</a>
+                        </div>
+                    </div>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hiking Trails -->
+    <section id="trails" class="py-32 bg-dark text-white/90">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-12 gap-6 mb-20">
+                <div class="col-span-12 md:col-span-4">
+                    <p class="label text-white/40">02 / Hiking Trails</p>
+                </div>
+                <div class="col-span-12 md:col-span-8">
+                    <h2 class="font-serif text-3xl md:text-4xl font-light">Walk where the land speaks</h2>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 md:gap-16">
+                <div class="group">
+                    <div class="overflow-hidden aspect-[3/4] mb-6">
+                        <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=600&q=80"
+                             alt="Goegap" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <p class="label text-white/40 mb-2">Nature Reserve</p>
+                    <h3 class="font-serif text-2xl font-light">Goegap</h3>
+                    <p class="text-white/50 mt-2 text-sm">Trails through the Goegap Nature Reserve, home to desert-adapted wildlife and seasonal blooms.</p>
+                </div>
+                <div class="group md:mt-24">
+                    <div class="overflow-hidden aspect-[3/4] mb-6">
+                        <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&q=80"
+                             alt="Lewerberg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <p class="label text-white/40 mb-2">Mountain</p>
+                    <h3 class="font-serif text-2xl font-light">Lewerberg</h3>
+                    <p class="text-white/50 mt-2 text-sm">Ascend Lewerberg for panoramic views across the Bushmanland plateau and beyond.</p>
+                </div>
+                <div class="group">
+                    <div class="overflow-hidden aspect-[3/4] mb-6">
+                        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80"
+                             alt="Bruinkop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <p class="label text-white/40 mb-2">Summit</p>
+                    <h3 class="font-serif text-2xl font-light">Bruinkop</h3>
+                    <p class="text-white/50 mt-2 text-sm">A challenging summit hike rewarding you with 360-degree views of the Northern Cape.</p>
+                </div>
+                <div class="group md:mt-24">
+                    <div class="overflow-hidden aspect-[3/4] mb-6">
+                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80"
+                             alt="Ponder Trail" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <p class="label text-white/40 mb-2">Contemplative</p>
+                    <h3 class="font-serif text-2xl font-light">Ponder Trail</h3>
+                    <p class="text-white/50 mt-2 text-sm">A meditative walk designed for reflection, winding through quiet koppies and dry riverbeds.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About / Guides -->
+    <section id="about" class="py-32">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-12 gap-6 mb-20">
+                <div class="col-span-12 md:col-span-4">
+                    <p class="label text-stone">03 / Your Guides</p>
+                </div>
+                <div class="col-span-12 md:col-span-8">
+                    <h2 class="font-serif text-3xl md:text-4xl font-light">Two perspectives, one landscape</h2>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-16">
+                <div>
+                    <div class="overflow-hidden aspect-[3/4] mb-8">
+                        <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=600&q=80"
+                             alt="Nicky Morris" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <p class="label text-stone mb-2">Culture &amp; Heritage</p>
+                    <h3 class="font-serif text-2xl font-light">Nicky Morris</h3>
+                    <div class="line my-4"></div>
+                    <p class="text-stone text-sm leading-relaxed">
+                        Nicky brings Namaqualand's stories alive through its people, traditions,
+                        and the deep cultural roots that connect communities to this ancient land.
+                    </p>
+                </div>
+                <div class="md:mt-20">
+                    <div class="overflow-hidden aspect-[3/4] mb-8">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80"
+                             alt="Elmarie Heyns" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <p class="label text-stone mb-2">Nature &amp; Ecology</p>
+                    <h3 class="font-serif text-2xl font-light">Elmarie Heyns</h3>
+                    <div class="line my-4"></div>
+                    <p class="text-stone text-sm leading-relaxed">
+                        Elmarie reveals the ecological wonders of the region, from rare succulents
+                        to geological formations that tell the story of Earth itself.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="pb-32">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-12 gap-6 mb-16">
+                <div class="col-span-12 md:col-span-4">
+                    <p class="label text-stone">04 / Gallery</p>
+                </div>
+                <div class="col-span-12 md:col-span-8">
+                    <h2 class="font-serif text-3xl md:text-4xl font-light">Moments from the landscape</h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-3">
+                <div class="col-span-12 md:col-span-8 aspect-[16/10] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=1200&q=80"
+                         alt="Landscape" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                </div>
+                <div class="col-span-6 md:col-span-4 aspect-[4/5] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=600&q=80"
+                         alt="Wildflowers" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                </div>
+                <div class="col-span-6 md:col-span-4 aspect-[4/5] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80"
+                         alt="Mountains" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                </div>
+                <div class="col-span-12 md:col-span-8 aspect-[16/10] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80"
+                         alt="Valley" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-32 border-t border-dark/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-12 gap-6">
+                <div class="col-span-12 md:col-span-4">
+                    <p class="label text-stone">05 / FAQ</p>
+                    <h2 class="font-serif text-3xl font-light mt-3">Common<br>questions</h2>
+                </div>
+                <div class="col-span-12 md:col-span-8">
+                    <div class="space-y-0">
+                        <template x-for="(item, index) in [
+                            { q: 'When is the best time to visit?', a: 'August and September for wildflowers, but every season reveals different beauty. Winter offers dramatic skies and green landscapes.' },
+                            { q: 'What fitness level is required?', a: 'Our day tours are accessible to most. Hiking trails vary from easy walks to moderate summit hikes. We match experiences to your comfort level.' },
+                            { q: 'What should I bring?', a: 'Comfortable walking shoes, sun protection, water, and a camera. We provide everything else including refreshments on most tours.' },
+                            { q: 'Can tours be customised?', a: 'Absolutely. We design bespoke experiences for groups, combining elements from different tours to create your perfect Namaqualand journey.' },
+                            { q: 'How do I book?', a: 'Contact us via the form below, WhatsApp, or email. We confirm availability and can accommodate last-minute bookings when possible.' }
+                        ]" :key="index">
+                            <div class="border-t border-dark/10">
+                                <button @click="activeAccordion = activeAccordion === index ? null : index"
+                                        class="w-full flex justify-between items-center py-6 text-left">
+                                    <span class="font-serif text-lg font-light" x-text="item.q"></span>
+                                    <span class="label text-stone ml-4 shrink-0" x-text="activeAccordion === index ? '&minus;' : '+'"></span>
+                                </button>
+                                <div x-show="activeAccordion === index" x-collapse>
+                                    <p class="pb-6 text-stone text-sm leading-relaxed max-w-lg" x-text="item.a"></p>
+                                </div>
+                            </div>
+                        </template>
+                        <div class="border-t border-dark/10"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-32 bg-copper/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 text-center">
+            <p class="label text-stone mb-4">Begin Your Journey</p>
+            <h2 class="font-serif text-4xl md:text-6xl font-light max-w-2xl mx-auto leading-tight">
+                The desert is patient. It will wait for you.
+            </h2>
+            <div class="mt-12">
+                <a href="#contact" class="btn-minimal text-dark">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-32">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-12 gap-6">
+                <div class="col-span-12 md:col-span-4">
+                    <p class="label text-stone mb-3">06 / Contact</p>
+                    <h2 class="font-serif text-3xl font-light">Start a<br>conversation</h2>
+                    <div class="mt-12 space-y-4 text-sm text-stone">
+                        <div>
+                            <p class="label text-dark mb-1">Location</p>
+                            <p>Springbok, Northern Cape</p>
+                        </div>
+                        <div>
+                            <p class="label text-dark mb-1">Email</p>
+                            <p>info@dustdaisies.co.za</p>
+                        </div>
+                        <div>
+                            <p class="label text-dark mb-1">Phone</p>
+                            <p>+27 27 000 0000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-12 md:col-span-7 md:col-start-6">
+                    <form class="space-y-8">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <label class="label text-stone block mb-2">Name</label>
+                                <input type="text" class="w-full bg-transparent border-b border-dark/20 py-3 text-sm focus:outline-none focus:border-dark transition">
+                            </div>
+                            <div>
+                                <label class="label text-stone block mb-2">Email</label>
+                                <input type="email" class="w-full bg-transparent border-b border-dark/20 py-3 text-sm focus:outline-none focus:border-dark transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="label text-stone block mb-2">Interest</label>
+                            <select class="w-full bg-transparent border-b border-dark/20 py-3 text-sm focus:outline-none focus:border-dark transition text-stone">
+                                <option>Day Tours</option>
+                                <option>Hiking Trails</option>
+                                <option>Custom Experience</option>
+                                <option>Group Booking</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="label text-stone block mb-2">Message</label>
+                            <textarea rows="4" class="w-full bg-transparent border-b border-dark/20 py-3 text-sm focus:outline-none focus:border-dark transition resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="btn-minimal text-dark">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-dark/10 py-12">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div>
+                    <p class="font-serif text-lg font-light">Dust &amp; Daisies Tours</p>
+                    <p class="text-stone text-xs mt-1">Springbok, Northern Cape, South Africa</p>
+                </div>
+                <div class="flex gap-8">
+                    <a href="#tours" class="label text-stone hover:text-dark transition">Tours</a>
+                    <a href="#trails" class="label text-stone hover:text-dark transition">Trails</a>
+                    <a href="#about" class="label text-stone hover:text-dark transition">About</a>
+                    <a href="#contact" class="label text-stone hover:text-dark transition">Contact</a>
+                </div>
+            </div>
+            <div class="line my-8"></div>
+            <p class="label text-stone/60">&copy; 2026 Dust &amp; Daisies Tours. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
