@@ -35,6 +35,12 @@ class DatabaseSeeder extends Seeder
             'facebook_url' => 'https://www.facebook.com/DustDaisies/',
             'instagram_url' => 'https://www.instagram.com/dust_and_daisies_guided_tours/',
             'whatsapp_note' => "There may be times when our phones won't have coverage so please use WhatsApp to send a message or voice note.",
+            'phone_label' => 'Elmarie',
+            'phone_2_label' => 'Nicky',
+            'location_region' => 'Northern Cape',
+            'location_detail' => 'Springbok, Namaqualand',
+            'meta_description' => 'Dust and Daisies Tours offers guided day tours and hiking trails through the magic of Namaqualand. Based in Springbok, Northern Cape.',
+            'footer_tagline' => 'Designed for stories that start with the landscape',
         ];
 
         foreach ($settings as $key => $value) {
@@ -50,39 +56,40 @@ class DatabaseSeeder extends Seeder
                 [
                     'type' => 'hero',
                     'data' => [
+                        'variant' => 'full',
                         'heading' => 'Guided Namaqualand Tours',
                         'subheading' => 'Discover beauty in drought or abundance',
                         'cta_text' => 'Explore Tours',
                         'cta_link' => '/day-tours',
-                        'image' => 'gallery/hero-main.jpg',
+                        'image' => 'gallery/client-flower-walk.jpg',
                         'slides' => [
-                            [
-                                'heading' => 'Guided Namaqualand Tours',
-                                'subheading' => 'Discover beauty in drought or abundance',
-                                'cta_text' => 'Explore Tours',
-                                'cta_link' => '/day-tours',
-                                'image' => 'gallery/hero-main.jpg',
-                            ],
                             [
                                 'heading' => 'Wildflower Season Awaits',
                                 'subheading' => 'Experience the spectacular Namaqualand bloom',
                                 'cta_text' => 'Flower Hunt Tour',
                                 'cta_link' => '/day-tours#booking-form',
-                                'image' => 'gallery/namaqualand-flowers-1.jpg',
+                                'image' => 'gallery/client-flower-walk.jpg',
+                            ],
+                            [
+                                'heading' => 'Guided Namaqualand Tours',
+                                'subheading' => 'Discover beauty in drought or abundance',
+                                'cta_text' => 'Explore Tours',
+                                'cta_link' => '/day-tours',
+                                'image' => 'gallery/client-granite-range.jpg',
                             ],
                             [
                                 'heading' => 'Hike the Untamed Trails',
                                 'subheading' => 'From Goegap to Lewerberg — paths less travelled',
                                 'cta_text' => 'View Hiking Trails',
                                 'cta_link' => '/hiking-trails',
-                                'image' => 'gallery/hiking-mountain.jpg',
+                                'image' => 'gallery/client-rock-plateau.jpg',
                             ],
                             [
                                 'heading' => 'Namaqualand\'s Best Kept Secret',
                                 'subheading' => 'Balanced rocks and geological wonders',
                                 'cta_text' => 'Book a Tour',
                                 'cta_link' => '/day-tours#booking-form',
-                                'image' => 'gallery/geological-wonder.jpg',
+                                'image' => 'gallery/client-aloe-vista.jpg',
                             ],
                         ],
                     ],
@@ -92,7 +99,7 @@ class DatabaseSeeder extends Seeder
                     'data' => [
                         'heading' => 'About Dust and Daisies',
                         'body' => 'Dust and Daisies Tours is a specialist tour operator offering guided day tours and hiking trail experiences in and around Springbok in the Northern Cape. The Namaqualand region is a place of contrasts – barren and dry during the summer and a wonderland of colour after sufficient winter rains.',
-                        'image' => 'gallery/namaqualand-daisies.jpg',
+                        'image' => 'gallery/client-aloe-vista.jpg',
                         'image_position' => 'right',
                     ],
                 ],
@@ -101,10 +108,10 @@ class DatabaseSeeder extends Seeder
                     'data' => [
                         'heading' => 'Featured Day Tours',
                         'cards' => [
-                            ['title' => 'The Copper Tour', 'description' => "Explore the region's mining heritage, from Simon van der Stel's explorations to copper discoveries.", 'link' => '/day-tours', 'image' => 'gallery/copper-tour-landscape.jpg'],
-                            ['title' => 'Kamiesberg Culture Tour', 'description' => 'A guided self-drive experience through rural Kamiesberg villages with traditional food and entertainment.', 'link' => '/day-tours', 'image' => 'gallery/kamiesberg-view.jpg'],
-                            ['title' => 'Flower Hunt', 'description' => 'Experience the spectacular transformation of Namaqualand during flower season.', 'link' => '/day-tours', 'image' => 'gallery/namaqualand-flowers-1.jpg'],
-                            ['title' => 'Geological Wonder Trip', 'description' => 'The landscape is both mesmerising and overwhelmingly beautiful.', 'link' => '/day-tours', 'image' => 'gallery/geological-wonder.jpg'],
+                            ['title' => 'The Copper Tour', 'summary' => "Explore the region's mining heritage, from Simon van der Stel's explorations to copper discoveries.", 'price' => 'R350 pp', 'duration' => '5 hours', 'distance' => '70km', 'guide_type' => 'self-drive', 'stamp' => 'Day route', 'label' => 'Curated itinerary', 'link' => '/day-tours', 'image' => 'gallery/copper-tour-landscape.jpg'],
+                            ['title' => 'Kamiesberg Culture Tour', 'summary' => 'A guided self-drive experience through rural Kamiesberg villages with traditional food and entertainment.', 'price' => 'R1,500 pp', 'duration' => '8 hours', 'distance' => '330km', 'guide_type' => 'self-drive', 'stamp' => 'Day route', 'label' => 'Curated itinerary', 'link' => '/day-tours', 'image' => 'gallery/client-granite-range.jpg'],
+                            ['title' => 'Flower Hunt', 'summary' => 'Experience the spectacular transformation of Namaqualand during flower season.', 'price' => 'From R650 pp', 'duration' => '8 hours', 'distance' => '320km', 'guide_type' => 'private-guide', 'stamp' => 'Seasonal route', 'label' => 'Curated itinerary', 'link' => '/day-tours', 'image' => 'gallery/client-flower-walk.jpg'],
+                            ['title' => 'Geological Wonder Trip', 'summary' => 'The landscape is both mesmerising and overwhelmingly beautiful.', 'price' => 'R650 pp', 'duration' => '4-8 hours', 'distance' => '150km', 'guide_type' => 'private-guide', 'stamp' => 'Day route', 'label' => 'Curated itinerary', 'link' => '/day-tours', 'image' => 'gallery/geological-wonder.jpg'],
                         ],
                     ],
                 ],
@@ -113,10 +120,10 @@ class DatabaseSeeder extends Seeder
                     'data' => [
                         'heading' => 'Day Hiking Trails',
                         'cards' => [
-                            ['title' => 'Goegap Nature Reserve Day Hike', 'description' => 'A guided experience through a 37,000-hectare reserve featuring spectacular scenery.', 'link' => '/hiking-trails', 'image' => 'gallery/goegap-trail.jpg'],
-                            ['title' => 'Lewerberg Houtpad Hiking Trail', 'description' => 'Ascend toward a granite formation with unspoilt and breathtaking views.', 'link' => '/hiking-trails', 'image' => 'gallery/lewerberg-trail.jpg'],
-                            ['title' => 'Bruinkop Hiking Trail', 'description' => 'Traverse unspoilt nature with lush vegetation endemic to the region.', 'link' => '/hiking-trails', 'image' => 'gallery/mountain-flowers.jpg'],
-                            ['title' => "Nicky's Ponder Trail", 'description' => 'An easy-paced trail with thought-provoking directions that invite deep reflection.', 'link' => '/hiking-trails', 'image' => 'gallery/nature-trail.jpg'],
+                            ['title' => 'Goegap Nature Reserve Day Hike', 'summary' => 'A guided experience through a 37,000-hectare reserve featuring spectacular scenery.', 'duration' => '4-8 hours', 'distance' => '7km', 'guide_type' => 'guided-hike', 'stamp' => 'Field walk', 'label' => 'Trail experience', 'link' => '/hiking-trails', 'image' => 'gallery/client-goegap-hiker.jpg'],
+                            ['title' => 'Lewerberg Houtpad Hiking Trail', 'summary' => 'Ascend toward a granite formation with unspoilt and breathtaking views.', 'duration' => '4 hours', 'distance' => '6.5km', 'difficulty' => '320m elevation', 'guide_type' => 'guided-hike', 'stamp' => 'Field walk', 'label' => 'Trail experience', 'link' => '/hiking-trails', 'image' => 'gallery/lewerberg-trail.jpg'],
+                            ['title' => 'Bruinkop Hiking Trail', 'summary' => 'Traverse unspoilt nature with lush vegetation endemic to the region.', 'duration' => '4 hours', 'distance' => '8.5km', 'guide_type' => 'guided-hike', 'stamp' => 'Field walk', 'label' => 'Trail experience', 'link' => '/hiking-trails', 'image' => 'gallery/mountain-flowers.jpg'],
+                            ['title' => "Nicky's Ponder Trail", 'summary' => 'An easy-paced trail with thought-provoking directions that invite deep reflection.', 'duration' => '3 hours', 'distance' => '3km', 'difficulty' => 'Easy', 'guide_type' => 'guided-hike', 'stamp' => 'Field walk', 'label' => 'Trail experience', 'link' => '/hiking-trails', 'image' => 'gallery/client-ponder-sign.jpg'],
                         ],
                     ],
                 ],
@@ -144,7 +151,7 @@ class DatabaseSeeder extends Seeder
                     'data' => [
                         'heading' => 'Day Tours',
                         'subheading' => "Unfolding Namaqualand's hidden gems",
-                        'image' => 'gallery/landscape-vista.jpg',
+                        'image' => 'gallery/client-plateau-vista.jpg',
                     ],
                 ],
                 [
@@ -152,10 +159,10 @@ class DatabaseSeeder extends Seeder
                     'data' => [
                         'heading' => 'Our Tours',
                         'cards' => [
-                            ['title' => 'The Copper Tour – R350 per person', 'description' => "A self-drive tour exploring the region's mining heritage. Visit the first copper mine in Springbok, the mining town of Concordia, and a decommissioned pump and museum in O'kiep. Distance: ~70km, Duration: 5 hours."],
-                            ['title' => 'Kamiesberg Culture Tour – R1,500 per person', 'description' => 'Guided self-drive through rural Kamiesberg villages. Visit a quiver tree house, learn about medicinal plants, enjoy traditional roosterbrood bread, and experience local violin entertainment. Distance: ~330km, Duration: 8 hours.'],
-                            ['title' => 'Flower Hunt – From R650 per person', 'description' => 'Experience the spectacular transformation of Namaqualand during flower season. Route varies based on optimal flowering locations. Distance: ~320km, Duration: 8 hours.'],
-                            ['title' => 'Geological Wonder Trip – R650 per person', 'description' => 'See improbably balanced rocks and remarkable formations shaped by erosion – the best kept secret of Namaqualand. Distance: ~150km, Duration: 4-8 hours.'],
+                            ['title' => 'The Copper Tour', 'summary' => "A self-drive tour exploring the region's mining heritage. Visit the first copper mine in Springbok, the mining town of Concordia, and a decommissioned pump and museum in O'kiep.", 'price' => 'R350 pp', 'duration' => '5 hours', 'distance' => '70km', 'guide_type' => 'self-drive', 'stamp' => 'Day route', 'label' => 'Curated itinerary'],
+                            ['title' => 'Kamiesberg Culture Tour', 'summary' => 'Guided self-drive through rural Kamiesberg villages. Visit a quiver tree house, learn about medicinal plants, enjoy traditional roosterbrood bread, and experience local violin entertainment.', 'price' => 'R1,500 pp', 'duration' => '8 hours', 'distance' => '330km', 'guide_type' => 'self-drive', 'stamp' => 'Day route', 'label' => 'Curated itinerary'],
+                            ['title' => 'Flower Hunt', 'summary' => 'Experience the spectacular transformation of Namaqualand during flower season. Route varies based on optimal flowering locations.', 'price' => 'From R650 pp', 'duration' => '8 hours', 'distance' => '320km', 'guide_type' => 'private-guide', 'stamp' => 'Seasonal route', 'label' => 'Curated itinerary'],
+                            ['title' => 'Geological Wonder Trip', 'summary' => 'See improbably balanced rocks and remarkable formations shaped by erosion – the best kept secret of Namaqualand.', 'price' => 'R650 pp', 'duration' => '4-8 hours', 'distance' => '150km', 'guide_type' => 'private-guide', 'stamp' => 'Day route', 'label' => 'Curated itinerary'],
                         ],
                     ],
                 ],
@@ -164,7 +171,7 @@ class DatabaseSeeder extends Seeder
                     'data' => [
                         'heading' => 'Tour Details',
                         'body' => '<p><strong>Tour Format:</strong> Convoy-style with minimum 2 vehicles, maximum 6 vehicles. Two-way radios provided. Guests drive personal vehicles; high ground clearance or 4×4 recommended (75% gravel roads).</p><p><strong>Minimum Group Size:</strong> 4 people</p><p><strong>Starting Point:</strong> Within 15 km radius of Springbok</p><p><strong>Guides:</strong> Nicky Morris and/or Elmarie Heyns</p><p><strong>What\'s Provided:</strong> Tour guides in company vehicle, two-way radios, conservation fees</p><p><strong>What to Bring:</strong> Own vehicle, lunch/snacks/water, sunscreen, hat, sturdy hiking boots, camera and binoculars</p><p><strong>Booking:</strong> First-come, first-served. 50% non-refundable deposit required. Children under 6 travel free.</p>',
-                        'image' => 'gallery/tour-group.jpg',
+                        'image' => 'gallery/client-granite-range.jpg',
                         'image_position' => 'left',
                     ],
                 ],
@@ -198,7 +205,7 @@ class DatabaseSeeder extends Seeder
                     'data' => [
                         'heading' => 'Hiking Trails',
                         'subheading' => 'Discover the essence of Namaqualand',
-                        'image' => 'gallery/hiking-mountain.jpg',
+                        'image' => 'gallery/client-rock-plateau.jpg',
                     ],
                 ],
                 [
@@ -206,10 +213,10 @@ class DatabaseSeeder extends Seeder
                     'data' => [
                         'heading' => 'Our Trails',
                         'cards' => [
-                            ['title' => 'Goegap Nature Reserve – R400/person', 'description' => '4-8 hours, 7km route through a 37,000-hectare reserve with 46 mammal, 38 reptile, 88 bird and nearly 600 plant species. Suitable for varying ages and fitness levels.'],
-                            ['title' => 'Lewerberg Houtpad – R450/person', 'description' => '4 hours, 6.5km route with 320m elevation gain and 18% average slope. Unspoilt and breathtaking views. Ages 12+.'],
-                            ['title' => 'Bruinkop – R400/person', 'description' => '4 hours, 8.5km route through quiver tree clusters with infinite landscape views. Suitable for different ages and fitness levels.'],
-                            ['title' => "Nicky's Ponder Trail – R250/person", 'description' => '3 hours, 3km easy-paced trail with thought-provoking directions through beautiful landscape and towering granite domes.'],
+                            ['title' => 'Goegap Nature Reserve', 'summary' => '37,000-hectare reserve with 46 mammal, 38 reptile, 88 bird and nearly 600 plant species. Suitable for varying ages and fitness levels.', 'price' => 'R400 pp', 'duration' => '4-8 hours', 'distance' => '7km', 'guide_type' => 'guided-hike', 'stamp' => 'Field walk', 'label' => 'Trail experience'],
+                            ['title' => 'Lewerberg Houtpad', 'summary' => 'Unspoilt and breathtaking views. Ages 12+.', 'price' => 'R450 pp', 'duration' => '4 hours', 'distance' => '6.5km', 'difficulty' => '320m elevation, 18% avg slope', 'guide_type' => 'guided-hike', 'stamp' => 'Field walk', 'label' => 'Trail experience'],
+                            ['title' => 'Bruinkop', 'summary' => 'Quiver tree clusters with infinite landscape views. Suitable for different ages and fitness levels.', 'price' => 'R400 pp', 'duration' => '4 hours', 'distance' => '8.5km', 'guide_type' => 'guided-hike', 'stamp' => 'Field walk', 'label' => 'Trail experience'],
+                            ['title' => "Nicky's Ponder Trail", 'summary' => 'Easy-paced trail with thought-provoking directions through beautiful landscape and towering granite domes.', 'price' => 'R250 pp', 'duration' => '3 hours', 'distance' => '3km', 'difficulty' => 'Easy', 'guide_type' => 'guided-hike', 'stamp' => 'Field walk', 'label' => 'Trail experience'],
                         ],
                     ],
                 ],
@@ -218,7 +225,7 @@ class DatabaseSeeder extends Seeder
                     'data' => [
                         'heading' => 'Trail Details',
                         'body' => '<p><strong>Guides:</strong> Nicky Morris and/or Elmarie Heyns</p><p><strong>Minimum Booking:</strong> 4 people required</p><p><strong>Location:</strong> All trails start/end within 15km radius of Springbok</p><p><strong>What\'s Provided:</strong> Tour guides, conservation fees</p><p><strong>What to Bring:</strong> Lunch/snacks/water, sunscreen, hat, sturdy hiking boots, walking stick/trekking poles, camera and binoculars</p><p><strong>Booking:</strong> 50% non-refundable deposit required.</p>',
-                        'image' => 'gallery/trail-walk.jpg',
+                        'image' => 'gallery/client-ponder-pool.jpg',
                         'image_position' => 'right',
                     ],
                 ],
@@ -252,7 +259,7 @@ class DatabaseSeeder extends Seeder
                     'data' => [
                         'heading' => 'About Us',
                         'subheading' => 'Discover beauty in drought or abundance',
-                        'image' => 'gallery/northern-cape-vista.jpg',
+                        'image' => 'gallery/client-aloe-vista.jpg',
                     ],
                 ],
                 [
@@ -260,7 +267,7 @@ class DatabaseSeeder extends Seeder
                     'data' => [
                         'heading' => 'Our Mission',
                         'body' => "Our mission is to inspire an appreciation of Namaqualand's natural beauty and traditions, giving the client an unforgettable sense of discovery while contributing to the sustainable upliftment of our communities.",
-                        'image' => 'gallery/wildflower-meadow.jpg',
+                        'image' => 'gallery/client-flower-walk.jpg',
                         'image_position' => 'right',
                     ],
                 ],
@@ -269,8 +276,8 @@ class DatabaseSeeder extends Seeder
                     'data' => [
                         'heading' => 'Meet Our Guides',
                         'cards' => [
-                            ['title' => 'Nicky Morris', 'description' => 'A Namaqualand native and artist who serves as a registered culture guide. She brings knowledge of regional history, cultural practices, traditional lifestyles, and local flora.', 'image' => 'gallery/guide-nicky.png'],
-                            ['title' => 'Elmarie Heyns', 'description' => "Specializes in nature and environmental appreciation. With extensive biodiversity management and guiding background, she educates visitors about Namaqualand's distinctive fauna, flora, and ecological survival strategies.", 'image' => 'gallery/guide-elmarie.png'],
+                            ['title' => 'Nicky Morris', 'summary' => 'A Namaqualand native and artist who serves as a registered culture guide. She brings knowledge of regional history, cultural practices, traditional lifestyles, and local flora.', 'stamp' => 'Culture guide', 'label' => 'Tour guide', 'image' => 'gallery/guide-nicky.png'],
+                            ['title' => 'Elmarie Heyns', 'summary' => "Specializes in nature and environmental appreciation. With extensive biodiversity management and guiding background, she educates visitors about Namaqualand's distinctive fauna, flora, and ecological survival strategies.", 'stamp' => 'Nature guide', 'label' => 'Tour guide', 'image' => 'gallery/guide-elmarie.png'],
                         ],
                     ],
                 ],
@@ -279,7 +286,7 @@ class DatabaseSeeder extends Seeder
                     'data' => [
                         'heading' => 'What We Offer',
                         'body' => '<ul><li>History tours</li><li>Culture and traditional lifestyle experiences</li><li>Plants and flowers guided walks</li><li>Wildlife and bird watching</li><li>Stargazing experiences</li></ul>',
-                        'image' => 'gallery/botanical-wonder.jpg',
+                        'image' => 'gallery/client-ponder-sign.jpg',
                         'image_position' => 'left',
                     ],
                 ],
@@ -297,23 +304,23 @@ class DatabaseSeeder extends Seeder
                     'data' => [
                         'heading' => 'Gallery',
                         'subheading' => 'Discover beauty in drought or abundance',
-                        'image' => 'gallery/spring-blooms-1.jpg',
+                        'image' => 'gallery/client-granite-range.jpg',
                     ],
                 ],
                 ['type' => 'gallery', 'data' => ['heading' => 'Copper Tour', 'images' => [
-                    ['image' => 'gallery/copper-tour-landscape.jpg', 'alt' => 'Copper Tour landscape', 'caption' => 'Mining heritage of Namaqualand'],
-                    ['image' => 'gallery/rocky-terrain-1.jpg', 'alt' => 'Rocky terrain', 'caption' => 'Ancient copper mining routes'],
+                    ['image' => 'gallery/client-granite-range.jpg', 'alt' => 'Copper Tour landscape', 'caption' => 'Mining heritage of Namaqualand'],
+                    ['image' => 'gallery/client-aloe-vista.jpg', 'alt' => 'Rocky terrain', 'caption' => 'Ancient copper mining routes'],
                     ['image' => 'gallery/rocky-terrain-2.jpg', 'alt' => 'Rocky formations', 'caption' => 'Geological history revealed'],
                     ['image' => 'gallery/sam-landscape-1.jpg', 'alt' => 'Landscape view', 'caption' => 'Northern Cape vistas'],
                 ]]],
                 ['type' => 'gallery', 'data' => ['heading' => 'Culture Tour', 'images' => [
                     ['image' => 'gallery/kamiesberg-view.jpg', 'alt' => 'Kamiesberg view', 'caption' => 'Kamiesberg mountain views'],
-                    ['image' => 'gallery/tour-adventure-1.jpg', 'alt' => 'Tour adventure', 'caption' => 'Rural village experience'],
+                    ['image' => 'gallery/client-goegap-hiker.jpg', 'alt' => 'Tour adventure', 'caption' => 'Rural village experience'],
                     ['image' => 'gallery/tour-adventure-2.jpg', 'alt' => 'Tour adventure', 'caption' => 'Traditional Namaqualand culture'],
                     ['image' => 'gallery/tour-adventure-3.jpg', 'alt' => 'Tour adventure', 'caption' => 'Quiver tree forest'],
                 ]]],
                 ['type' => 'gallery', 'data' => ['heading' => 'Flower Hunt', 'images' => [
-                    ['image' => 'gallery/namaqualand-flowers-1.jpg', 'alt' => 'Namaqualand flowers', 'caption' => 'Namaqualand in full bloom'],
+                    ['image' => 'gallery/client-flower-walk.jpg', 'alt' => 'Namaqualand flowers', 'caption' => 'Namaqualand in full bloom'],
                     ['image' => 'gallery/namaqualand-flowers-2.jpg', 'alt' => 'Wildflowers', 'caption' => 'Spring wildflower carpet'],
                     ['image' => 'gallery/flower-hunt-1.jpg', 'alt' => 'Flower hunt', 'caption' => 'Seasonal floral display'],
                     ['image' => 'gallery/flower-hunt-2.jpg', 'alt' => 'Flower hunt', 'caption' => "Nature's floral tapestry"],
@@ -324,32 +331,32 @@ class DatabaseSeeder extends Seeder
                     ['image' => 'gallery/wildflowers-field.jpg', 'alt' => 'Wildflower field', 'caption' => 'Fields of colour'],
                 ]]],
                 ['type' => 'gallery', 'data' => ['heading' => 'Geological Wonder', 'images' => [
-                    ['image' => 'gallery/geological-wonder.jpg', 'alt' => 'Geological wonder', 'caption' => 'Balanced rock formations'],
+                    ['image' => 'gallery/client-plateau-vista.jpg', 'alt' => 'Geological wonder', 'caption' => 'Balanced rock formations'],
                     ['image' => 'gallery/desert-landscape-1.jpg', 'alt' => 'Desert landscape', 'caption' => 'Ancient erosion patterns'],
                     ['image' => 'gallery/desert-landscape-2.jpg', 'alt' => 'Desert landscape', 'caption' => 'The best kept secret of Namaqualand'],
                     ['image' => 'gallery/sam-landscape-2.jpg', 'alt' => 'Landscape', 'caption' => 'Remarkable formations'],
                 ]]],
                 ['type' => 'gallery', 'data' => ['heading' => 'Goegap Hiking', 'images' => [
-                    ['image' => 'gallery/goegap-trail.jpg', 'alt' => 'Goegap trail', 'caption' => 'Goegap Nature Reserve'],
+                    ['image' => 'gallery/client-goegap-hiker.jpg', 'alt' => 'Goegap trail', 'caption' => 'Goegap Nature Reserve'],
                     ['image' => 'gallery/succulent-garden.jpg', 'alt' => 'Succulent garden', 'caption' => 'Unique desert succulents'],
                     ['image' => 'gallery/desert-flora.jpg', 'alt' => 'Desert flora', 'caption' => 'Resilient desert plants'],
                     ['image' => 'gallery/spring-blooms-4.jpg', 'alt' => 'Spring blooms', 'caption' => 'Goegap in spring'],
                 ]]],
                 ['type' => 'gallery', 'data' => ['heading' => 'Ponder Trail', 'images' => [
-                    ['image' => 'gallery/nature-trail.jpg', 'alt' => 'Nature trail', 'caption' => 'Reflective moments on the trail'],
+                    ['image' => 'gallery/client-ponder-sign.jpg', 'alt' => 'Nature trail', 'caption' => 'Reflective moments on the trail'],
                     ['image' => 'gallery/mountain-view.jpg', 'alt' => 'Mountain view', 'caption' => 'Towering granite domes'],
                     ['image' => 'gallery/golden-hour.jpg', 'alt' => 'Golden hour', 'caption' => 'Golden light on the path'],
-                    ['image' => 'gallery/trail-scenery-1.jpg', 'alt' => 'Trail scenery', 'caption' => 'Beauty in every direction'],
+                    ['image' => 'gallery/client-ponder-landscape.jpg', 'alt' => 'Trail scenery', 'caption' => 'Beauty in every direction'],
                 ]]],
                 ['type' => 'gallery', 'data' => ['heading' => 'Lewerberg Houtpad', 'images' => [
                     ['image' => 'gallery/lewerberg-trail.jpg', 'alt' => 'Lewerberg trail', 'caption' => 'Ascending the Lewerberg'],
-                    ['image' => 'gallery/hiking-mountain.jpg', 'alt' => 'Mountain hiking', 'caption' => 'Breathtaking summit views'],
+                    ['image' => 'gallery/client-rock-plateau.jpg', 'alt' => 'Mountain hiking', 'caption' => 'Breathtaking summit views'],
                     ['image' => 'gallery/sunrise-hike.jpg', 'alt' => 'Sunrise hike', 'caption' => 'Early morning ascent'],
                     ['image' => 'gallery/trail-scenery-2.jpg', 'alt' => 'Trail scenery', 'caption' => 'Unspoilt mountain paths'],
                 ]]],
                 ['type' => 'gallery', 'data' => ['heading' => 'Bruinkop', 'images' => [
                     ['image' => 'gallery/mountain-flowers.jpg', 'alt' => 'Mountain flowers', 'caption' => 'Flora along the trail'],
-                    ['image' => 'gallery/landscape-vista.jpg', 'alt' => 'Landscape vista', 'caption' => 'Infinite landscape views'],
+                    ['image' => 'gallery/client-ponder-pool.jpg', 'alt' => 'Landscape vista', 'caption' => 'Infinite landscape views'],
                     ['image' => 'gallery/group-hike-1.jpg', 'alt' => 'Group hike', 'caption' => 'Exploring together'],
                     ['image' => 'gallery/evening-sky.jpg', 'alt' => 'Evening sky', 'caption' => 'Sunset over Bruinkop'],
                 ]]],

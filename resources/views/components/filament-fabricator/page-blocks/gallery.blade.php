@@ -1,61 +1,80 @@
 @aware(['page'])
 
-<section class="bg-sand py-24 bg-topo" x-data="{
-    open: false,
-    current: 0,
-    images: {{ Js::from(collect($images ?? [])->filter(fn($i) => $i['image'] ?? null)->values()) }},
-    get total() { return this.images.length },
-    get src() { return this.images[this.current]?.image ? '/storage/' + this.images[this.current].image : '' },
-    get alt() { return this.images[this.current]?.alt || 'Gallery image' },
-    get caption() { return this.images[this.current]?.caption || '' },
-    show(i) { this.current = i; this.open = true },
-    next() { this.current = (this.current + 1) % this.total },
-    prev() { this.current = (this.current - 1 + this.total) % this.total },
-}" @keydown.escape.window="open = false" @keydown.right.window="open && next()" @keydown.left.window="open && prev()">
+@php
+    $galleryImages = collect($images ?? [])->filter(fn ($item) => $item['image'] ?? null)->values();
+@endphp
+
+<section
+    class="section-shell"
+    x-data="{
+        open: false,
+        current: 0,
+        images: {{ Js::from($galleryImages) }},
+        get total() { return this.images.length },
+        get src() { return this.images[this.current]?.image ? '/storage/' + this.images[this.current].image : '' },
+        get alt() { return this.images[this.current]?.alt || 'Gallery image' },
+        get caption() { return this.images[this.current]?.caption || '' },
+        show(i) { this.current = i; this.open = true },
+        next() { this.current = (this.current + 1) % this.total },
+        prev() { this.current = (this.current - 1 + this.total) % this.total },
+    }"
+    @keydown.escape.window="open = false"
+    @keydown.right.window="open && next()"
+    @keydown.left.window="open && prev()"
+>
     <div class="max-w-7xl mx-auto px-6">
-        @if($heading ?? null)
-            <div class="text-center mb-14">
-                <h2 class="font-accent text-4xl md:text-5xl text-brand">{{ $heading }}</h2>
-                <div class="section-divider mt-4"></div>
+        <div class="section-header lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+            <div>
+                <span class="eyebrow">{{ $eyebrow ?? 'Archive of place' }}</span>
+                @if ($heading ?? null)
+                    <h2 class="section-title mt-5">{{ $heading }}</h2>
+                @endif
             </div>
-        @endif
-        @if($images ?? null)
-            <div class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-                @foreach($images as $i => $item)
-                    @php $src = $item['image'] ?? null; @endphp
-                    @if($src)
-                        @php $tilts = ['photo-tilt-left', 'photo-tilt-right', 'photo-tilt-slight']; @endphp
-                        <div class="break-inside-avoid gallery-item washi-tape {{ $tilts[$i % 3] }}" @click="show({{ $i }})">
-                            <img src="{{ Storage::url($src) }}"
-                                 alt="{{ $item['alt'] ?? 'Gallery image ' . ($i + 1) }}"
-                                 class="w-full object-cover"
-                                 loading="lazy">
-                            @if($item['caption'] ?? null)
-                                <p class="absolute bottom-0 left-0 right-0 p-3 text-white text-sm font-accent text-lg z-10 opacity-0 group-hover:opacity-100 transition">{{ $item['caption'] }}</p>
-                            @endif
+            <p class="section-copy lg:justify-self-end">
+                {{ $intro ?? 'A visual record of stone, flora, weather, trails and the slower textures of the Northern Cape. Open any frame for a closer look.' }}
+            </p>
+        </div>
+
+        @if ($galleryImages->isNotEmpty())
+            <div class="gallery-grid mt-14">
+                @foreach ($galleryImages as $i => $item)
+                    @php
+                        $layout = match ($i % 6) {
+                            0 => 'md:col-span-7 md:row-span-2 min-h-[26rem]',
+                            1 => 'md:col-span-5 min-h-[18rem]',
+                            2 => 'md:col-span-5 min-h-[18rem]',
+                            3 => 'md:col-span-7 min-h-[24rem]',
+                            4 => 'md:col-span-4 min-h-[18rem]',
+                            default => 'md:col-span-8 min-h-[20rem]',
+                        };
+                    @endphp
+                    <button type="button" class="gallery-item {{ $layout }}" @click="show({{ $i }})">
+                        <img src="{{ Storage::url($item['image']) }}" alt="{{ $item['alt'] ?? 'Gallery image '.($i + 1) }}" loading="lazy">
+                        <div class="gallery-caption">
+                            <p>Frame {{ str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) }}</p>
+                            <strong>{{ $item['caption'] ?: ($item['alt'] ?? 'Namaqualand') }}</strong>
                         </div>
-                    @endif
+                    </button>
                 @endforeach
             </div>
         @endif
     </div>
 
-    {{-- Lightbox --}}
     <template x-teleport="body">
-        <div x-show="open" x-transition.opacity.duration.200ms
-             class="fixed inset-0 z-50 flex items-center justify-center bg-ink/95 backdrop-blur-sm p-4"
-             @click.self="open = false">
-
-            <button @click="open = false" class="absolute top-6 right-6 text-sand/60 hover:text-white text-2xl z-10 w-10 h-10 flex items-center justify-center border border-sand/20 hover:border-sand/40 transition">&times;</button>
-
-            <button @click="prev()" class="absolute left-6 text-sand/60 hover:text-white text-3xl z-10 w-12 h-12 flex items-center justify-center border border-sand/20 hover:border-sand/40 transition">&lsaquo;</button>
-            <button @click="next()" class="absolute right-6 text-sand/60 hover:text-white text-3xl z-10 w-12 h-12 flex items-center justify-center border border-sand/20 hover:border-sand/40 transition">&rsaquo;</button>
-
-            <div class="max-w-5xl max-h-[85vh] flex flex-col items-center">
-                <img :src="src" :alt="alt" class="max-h-[75vh] max-w-full object-contain shadow-2xl">
-                <div class="mt-5 text-center">
-                    <p x-show="caption" x-text="caption" class="font-accent text-xl text-sand/80 mb-1"></p>
-                    <p class="text-sand/30 text-xs uppercase tracking-widest" x-text="(current + 1) + ' / ' + total"></p>
+        <div x-show="open" x-transition.opacity.duration.200ms class="fixed inset-0 z-50 bg-ink/95 backdrop-blur-sm p-4 md:p-8" @click.self="open = false">
+            <div class="h-full max-w-6xl mx-auto grid lg:grid-cols-[1fr_22rem] gap-6 items-center">
+                <div class="relative">
+                    <button @click="open = false" class="absolute top-4 right-4 z-10 w-11 h-11 border border-white/16 bg-ink/35 text-white">×</button>
+                    <img :src="src" :alt="alt" class="w-full max-h-[78vh] object-contain shadow-2xl bg-black/20">
+                </div>
+                <div class="glass-panel p-6 md:p-8 text-white">
+                    <p class="text-[0.68rem] font-extrabold uppercase tracking-[0.22em] text-white/50">Field frame</p>
+                    <h3 x-text="caption || alt" class="mt-4 text-3xl leading-none"></h3>
+                    <p class="mt-6 text-sm uppercase tracking-[0.18em] text-white/42" x-text="String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0')"></p>
+                    <div class="mt-8 flex gap-3">
+                        <button @click="prev()" class="btn-outline text-white border-white/14 bg-white/5 hover:bg-white/12">Prev</button>
+                        <button @click="next()" class="btn-primary">Next</button>
+                    </div>
                 </div>
             </div>
         </div>

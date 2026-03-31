@@ -1,24 +1,43 @@
 @aware(['page'])
 
-<section class="bg-sand py-24 bg-daisy-watermark relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-        <div class="grid md:grid-cols-2 gap-16 items-center">
-            @php $imgLeft = ($image_position ?? 'right') === 'left'; @endphp
+@php
+    $imgLeft = ($imagePosition ?? 'right') === 'left';
+@endphp
 
-            <div class="{{ $imgLeft ? 'order-1' : 'order-1 md:order-2' }}">
-                @if($image ?? null)
-                    @php $tilts = ['photo-tilt-right', 'photo-tilt-left', 'photo-tilt-slight']; @endphp
-                    <div class="washi-tape {{ $tilts[array_rand($tilts)] }}">
-                        <img src="{{ Storage::url($image) }}" alt="{{ $heading ?? '' }}" class="w-full aspect-[4/5] object-cover journal-photo shadow-xl">
+<section class="section-shell">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="section-bleed p-6 md:p-10 lg:p-14">
+            <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                <div class="{{ $imgLeft ? 'lg:order-1' : 'lg:order-2' }}">
+                    @if ($image ?? null)
+                        <div class="expedition-card">
+                            <div class="tour-card-media aspect-[4/5]">
+                                <img src="{{ Storage::url($image) }}" alt="{{ $heading ?? $page->title }}" class="journal-photo">
+                                <div class="tour-stamp">{{ $stamp ?? 'Field record' }}</div>
+                                <div class="map-dots" aria-hidden="true">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
+                <div class="{{ $imgLeft ? 'lg:order-2' : 'lg:order-1' }} section-grid">
+                    <div class="section-header">
+                        <span class="eyebrow">{{ $eyebrow ?? 'Landscape notes' }}</span>
+                        @if ($heading ?? null)
+                            <h2 class="section-title">{{ $heading }}</h2>
+                        @endif
+                        <div class="section-divider"></div>
                     </div>
-                @endif
-            </div>
-            <div class="{{ $imgLeft ? 'order-2' : 'order-2 md:order-1' }} margin-line pl-8 ruled-bg">
-                @if($heading ?? null)
-                    <h2 class="text-3xl md:text-4xl font-bold mb-8 leading-tight">{{ $heading }}</h2>
-                @endif
-                <div class="drop-cap text-base leading-[1.85] text-ink/70 prose prose-stone max-w-none">
-                    {!! $body ?? '' !!}
+
+                    <div class="note-card p-8 md:p-10">
+                        <div class="drop-cap editorial-prose text-[1.02rem]">
+                            {!! $body ?? '' !!}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

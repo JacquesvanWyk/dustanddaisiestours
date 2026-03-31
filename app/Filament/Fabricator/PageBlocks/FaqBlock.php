@@ -16,6 +16,7 @@ class FaqBlock extends PageBlock
     {
         return $block
             ->schema([
+                TextInput::make('eyebrow')->default('Practical details'),
                 TextInput::make('heading'),
                 Repeater::make('items')
                     ->schema([

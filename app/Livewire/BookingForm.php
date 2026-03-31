@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Mail\BookingRequest;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class BookingForm extends Component
@@ -25,14 +26,18 @@ class BookingForm extends Component
     public bool $sent = false;
 
     public static array $tours = [
-        'The Copper Tour',
-        'Kamiesberg Culture Tour',
-        'Flower Hunt Tour',
-        'Geological Wonder Trip',
-        'Goegap Nature Reserve Day Hike',
-        'Lewerberg Houtpad Hiking Trail',
-        'Bruinkop Hiking Trail',
-        "Nicky's Ponder Trail",
+        'Day Tours' => [
+            'The Copper Tour',
+            'The Kamiesberg Experience',
+            'Flower Hunt',
+            'Geological Wonder Tour',
+        ],
+        'Hiking Trails' => [
+            'Goegap Trail',
+            'Lewerberg Trail',
+            'Bruinkop Trail',
+            'Ponder Trail',
+        ],
     ];
 
     protected function rules(): array
@@ -41,7 +46,7 @@ class BookingForm extends Component
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:50',
-            'tour' => 'required|string',
+            'tour' => ['required', Rule::in(collect(static::$tours)->flatten()->all())],
             'guests' => 'required|integer|min:1',
             'preferred_date' => 'required|date|after:today',
             'message' => 'nullable|string|max:5000',
