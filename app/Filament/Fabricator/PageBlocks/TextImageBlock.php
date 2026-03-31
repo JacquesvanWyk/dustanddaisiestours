@@ -17,11 +17,14 @@ class TextImageBlock extends PageBlock
     {
         return $block
             ->schema([
+                TextInput::make('eyebrow')->default('Landscape notes'),
                 TextInput::make('heading')->required(),
                 RichEditor::make('body')->required(),
                 FileUpload::make('image')
                     ->image()
-                    ->directory('text-images'),
+                    ->disk('public')
+                    ->directory('gallery'),
+                TextInput::make('stamp')->default('Field record'),
                 Select::make('image_position')
                     ->options([
                         'left' => 'Left',

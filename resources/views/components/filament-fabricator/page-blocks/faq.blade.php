@@ -1,25 +1,29 @@
 @aware(['page'])
 
-<section class="bg-sand py-24 bg-topo">
-    <div class="max-w-3xl mx-auto px-6">
-        @if($heading ?? null)
-            <div class="text-center mb-16">
-                <p class="font-accent text-2xl text-brand mb-2">Common Questions</p>
-                <h2 class="text-3xl md:text-4xl font-bold">{{ $heading }}</h2>
-                <div class="section-divider mt-5"></div>
-            </div>
-        @endif
-        @if($items ?? null)
-            <div class="margin-line pl-8 ruled-bg">
-                @foreach($items as $i => $item)
-                    <div x-data="{ open: false }" class="faq-item py-6">
-                        <button @click="open = !open" class="w-full flex justify-between items-center text-left gap-4">
-                            <h3 class="text-lg font-semibold">{{ $item['question'] ?? '' }}</h3>
-                            <div class="w-8 h-8 flex items-center justify-center shrink-0 border border-ink/10 transition" :class="open && 'bg-brand border-brand'">
-                                <svg class="w-4 h-4 transition-all" :class="open ? 'rotate-45 text-white' : 'text-brand'" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
-                            </div>
+<section class="section-shell">
+    <div class="max-w-5xl mx-auto px-6">
+        <div class="section-header max-w-3xl">
+            <span class="eyebrow">{{ $eyebrow ?? 'Practical details' }}</span>
+            @if ($heading ?? null)
+                <h2 class="section-title">{{ $heading }}</h2>
+            @endif
+            <div class="section-divider"></div>
+        </div>
+
+        @if ($items ?? null)
+            <div class="mt-12 section-bleed p-6 md:p-10">
+                @foreach ($items as $i => $item)
+                    <div x-data="{ open: {{ $i === 0 ? 'true' : 'false' }} }" class="faq-item">
+                        <button @click="open = !open" class="faq-trigger">
+                            <span class="faq-index">{{ str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) }}</span>
+                            <span>
+                                <h3 class="text-2xl md:text-3xl leading-none">{{ $item['question'] ?? '' }}</h3>
+                            </span>
+                            <span class="faq-icon" :class="open ? 'bg-brand text-white border-brand' : ''">
+                                <svg class="w-4 h-4 transition-transform" :class="open ? 'rotate-45' : ''" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
+                            </span>
                         </button>
-                        <div x-show="open" x-collapse class="mt-4 text-ink/60 leading-relaxed text-[0.95rem] pr-12">
+                        <div x-show="open" x-collapse class="pb-6 pl-[3.2rem] pr-4 text-[0.98rem] leading-8 text-ink/68">
                             {{ $item['answer'] ?? '' }}
                         </div>
                     </div>

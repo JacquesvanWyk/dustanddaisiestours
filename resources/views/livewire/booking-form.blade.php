@@ -1,73 +1,78 @@
 <div>
-    @if($sent)
-        <div class="bg-brand/5 border border-brand/20 p-8 text-center">
-            <p class="font-accent text-3xl text-brand mb-2">Booking Request Sent!</p>
-            <p class="text-sm text-ink/60">We'll confirm your booking via email or WhatsApp.</p>
-            <p class="text-xs text-ink/40 mt-3">A 50% non-refundable deposit is required to secure your booking.</p>
+    @if ($sent)
+        <div class="success-card p-8 md:p-10 text-center">
+            <p class="text-[0.7rem] font-extrabold uppercase tracking-[0.22em] text-sage/70">Booking request logged</p>
+            <p class="mt-4 text-4xl leading-none">We'll confirm the route with you.</p>
+            <p class="mt-4 text-sm leading-7 text-ink/62">A confirmation will follow by email or WhatsApp once we have checked dates, availability and bloom conditions.</p>
+            <p class="mt-3 text-xs uppercase tracking-[0.16em] text-ink/40">50% non-refundable deposit required to secure the booking</p>
         </div>
     @else
+        <div class="mb-8">
+            <p class="text-[0.7rem] font-extrabold uppercase tracking-[0.22em] text-sage/65">Booking request</p>
+            <h3 class="mt-3 text-3xl md:text-4xl leading-none">Reserve a guided route</h3>
+        </div>
+
         <form wire:submit="submit" class="space-y-5">
-            <div class="grid sm:grid-cols-2 gap-5">
+            <div class="grid md:grid-cols-2 gap-5">
                 <div>
-                    <label class="text-xs uppercase tracking-[0.15em] text-earth font-semibold block mb-2">Name</label>
-                    <input type="text" wire:model="name" required class="w-full bg-sand border border-ink/10 px-4 py-3 text-sm transition">
-                    @error('name') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
+                    <label class="field-label">Name</label>
+                    <input type="text" wire:model="name" required class="field-input">
+                    @error('name') <p class="text-red-600 text-xs mt-2">{{ $message }}</p> @enderror
                 </div>
                 <div>
-                    <label class="text-xs uppercase tracking-[0.15em] text-earth font-semibold block mb-2">Email</label>
-                    <input type="email" wire:model="email" required class="w-full bg-sand border border-ink/10 px-4 py-3 text-sm transition">
-                    @error('email') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
-                </div>
-            </div>
-            <div class="grid sm:grid-cols-2 gap-5">
-                <div>
-                    <label class="text-xs uppercase tracking-[0.15em] text-earth font-semibold block mb-2">Phone</label>
-                    <input type="tel" wire:model="phone" required class="w-full bg-sand border border-ink/10 px-4 py-3 text-sm transition">
-                    @error('phone') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
-                </div>
-                <div>
-                    <label class="text-xs uppercase tracking-[0.15em] text-earth font-semibold block mb-2">Number of Guests</label>
-                    <input type="number" wire:model="guests" min="1" required class="w-full bg-sand border border-ink/10 px-4 py-3 text-sm transition">
-                    @error('guests') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
+                    <label class="field-label">Email</label>
+                    <input type="email" wire:model="email" required class="field-input">
+                    @error('email') <p class="text-red-600 text-xs mt-2">{{ $message }}</p> @enderror
                 </div>
             </div>
-            <div class="grid sm:grid-cols-2 gap-5">
+
+            <div class="grid md:grid-cols-2 gap-5">
                 <div>
-                    <label class="text-xs uppercase tracking-[0.15em] text-earth font-semibold block mb-2">Preferred Tour</label>
-                    <select wire:model="tour" required class="w-full bg-sand border border-ink/10 px-4 py-3 text-sm transition">
-                        <option value="">Select a tour...</option>
-                        <optgroup label="Day Tours">
-                            <option>The Copper Tour</option>
-                            <option>Kamiesberg Culture Tour</option>
-                            <option>Flower Hunt Tour</option>
-                            <option>Geological Wonder Trip</option>
-                        </optgroup>
-                        <optgroup label="Hiking Trails">
-                            <option>Goegap Nature Reserve Day Hike</option>
-                            <option>Lewerberg Houtpad Hiking Trail</option>
-                            <option>Bruinkop Hiking Trail</option>
-                            <option>Nicky's Ponder Trail</option>
-                        </optgroup>
+                    <label class="field-label">Phone or WhatsApp</label>
+                    <input type="tel" wire:model="phone" required class="field-input">
+                    @error('phone') <p class="text-red-600 text-xs mt-2">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <label class="field-label">Number of guests</label>
+                    <input type="number" wire:model="guests" min="1" required class="field-input">
+                    @error('guests') <p class="text-red-600 text-xs mt-2">{{ $message }}</p> @enderror
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-5">
+                <div>
+                    <label class="field-label">Preferred tour</label>
+                    <select wire:model="tour" required class="field-select">
+                        <option value="">Choose a tour or trail…</option>
+                        @foreach(App\Livewire\BookingForm::$tours as $group => $tours)
+                            <optgroup label="{{ $group }}">
+                                @foreach($tours as $tour)
+                                    <option value="{{ $tour }}">{{ $tour }}</option>
+                                @endforeach
+                            </optgroup>
+                        @endforeach
                     </select>
-                    @error('tour') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
+                    @error('tour') <p class="text-red-600 text-xs mt-2">{{ $message }}</p> @enderror
                 </div>
                 <div>
-                    <label class="text-xs uppercase tracking-[0.15em] text-earth font-semibold block mb-2">Preferred Date</label>
-                    <input type="date" wire:model="preferred_date" required class="w-full bg-sand border border-ink/10 px-4 py-3 text-sm transition">
-                    @error('preferred_date') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
+                    <label class="field-label">Preferred date</label>
+                    <input type="date" wire:model="preferred_date" required class="field-input">
+                    @error('preferred_date') <p class="text-red-600 text-xs mt-2">{{ $message }}</p> @enderror
                 </div>
             </div>
+
             <div>
-                <label class="text-xs uppercase tracking-[0.15em] text-earth font-semibold block mb-2">Additional Message</label>
-                <textarea wire:model="message" rows="3" class="w-full bg-sand border border-ink/10 px-4 py-3 text-sm transition"></textarea>
-                @error('message') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
+                <label class="field-label">Notes for the guide</label>
+                <textarea wire:model="message" rows="4" class="field-textarea" placeholder="Share mobility needs, flower priorities, photography interests or anything else we should factor into the route."></textarea>
+                @error('message') <p class="text-red-600 text-xs mt-2">{{ $message }}</p> @enderror
             </div>
-            <div class="flex flex-wrap items-center justify-between gap-4">
+
+            <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
+                <p class="field-note">Minimum 4 people. Children under 6 are free.</p>
                 <button type="submit" class="btn-primary" wire:loading.attr="disabled">
-                    <span wire:loading.remove>Request Booking</span>
+                    <span wire:loading.remove>Request booking</span>
                     <span wire:loading>Sending...</span>
                 </button>
-                <p class="text-xs text-ink/40">Min 4 people. Children under 6 free.</p>
             </div>
         </form>
     @endif
