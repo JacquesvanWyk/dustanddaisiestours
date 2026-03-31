@@ -60,6 +60,7 @@ class SiteSettings extends Page implements HasForms
                 TextInput::make('instagram_url')->label('Instagram URL')->url(),
                 Textarea::make('whatsapp_note')->label('WhatsApp Note')->rows(2),
                 Textarea::make('meta_description')->label('Meta Description')->rows(3),
+                FileUpload::make('og_image')->label('OG Image (1200x630)')->image()->disk('public')->directory('gallery'),
                 TextInput::make('footer_tagline')->label('Footer Tagline'),
             ])
             ->statePath('data');
