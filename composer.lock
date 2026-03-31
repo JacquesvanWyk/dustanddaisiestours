@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5385a8fa9a172ee571ae1e684aba3fc6",
+    "content-hash": "c337c2ab210b64e4143f597d44b9f3da",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -8865,11 +8865,11 @@
         },
         {
             "name": "z3d0x/filament-fabricator",
-            "version": "4.x-dev",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "packages/filament-fabricator",
-                "reference": "dd8872edda8b3d20287997dc32833be416c8c0c0"
+                "reference": "3c7ea2403557cfe2642b87b7e52887d8f767aa58"
             },
             "require": {
                 "filament/filament": "^5.0",
@@ -8953,6 +8953,7 @@
                 "laravel"
             ],
             "transport-options": {
+                "symlink": false,
                 "relative": true
             }
         }
