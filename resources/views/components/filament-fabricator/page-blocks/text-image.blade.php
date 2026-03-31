@@ -7,7 +7,7 @@
 <section class="section-shell">
     <div class="max-w-7xl mx-auto px-6">
         <div class="section-bleed p-6 md:p-10 lg:p-14">
-            <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            <div class="grid {{ ($image ?? null) ? 'lg:grid-cols-2' : 'grid-cols-1' }} gap-10 lg:gap-16 items-center">
                 <div class="{{ $imgLeft ? 'lg:order-1' : 'lg:order-2' }}">
                     @if ($image ?? null)
                         <div class="expedition-card">
