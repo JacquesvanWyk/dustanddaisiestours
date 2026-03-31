@@ -29,9 +29,15 @@
             total: {{ count($slides) }},
             transitioning: false,
             auto: null,
+            touchStartX: 0,
             init() {
                 if (this.total > 1) this.auto = setInterval(() => this.next(), 7000);
                 this.$nextTick(() => this.animateSlide());
+                this.$el.addEventListener('touchstart', e => { this.touchStartX = e.touches[0].clientX; }, { passive: true });
+                this.$el.addEventListener('touchend', e => {
+                    const diff = this.touchStartX - e.changedTouches[0].clientX;
+                    if (Math.abs(diff) > 50) diff > 0 ? this.next() : this.prev();
+                }, { passive: true });
             },
             next() {
                 if (this.transitioning || this.total < 2) return;

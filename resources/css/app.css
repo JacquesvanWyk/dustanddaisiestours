@@ -845,10 +845,10 @@ textarea:focus {
     }
 
     .slide-panel {
-        position: static;
+        right: 1rem;
+        left: 1rem;
+        bottom: 1rem;
         width: auto;
-        margin-inline: 1.5rem;
-        margin-bottom: 1.5rem;
     }
 
     .section-title {
