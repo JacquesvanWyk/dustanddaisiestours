@@ -66,7 +66,7 @@
                                     <h3 class="mt-3 text-3xl leading-none group-hover:text-brand transition-colors">{{ $cleanTitle }}</h3>
                                 </div>
                                 @if ($price)
-                                    <span class="pill border border-brand/20 bg-brand/8 text-brand">{{ $price }}</span>
+                                    <span class="pill border border-brand/20 bg-brand/8 text-brand whitespace-nowrap">{{ $price }}</span>
                                 @endif
                             </div>
 
