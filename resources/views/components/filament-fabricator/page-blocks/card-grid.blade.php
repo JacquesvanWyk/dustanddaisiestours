@@ -15,7 +15,7 @@
         </div>
 
         @if ($cards ?? null)
-            <div class="mt-14 grid md:grid-cols-2 xl:grid-cols-3 gap-7">
+            <div class="mt-14 grid md:grid-cols-2 gap-7 max-w-5xl mx-auto">
                 @foreach ($cards as $i => $card)
                     @php
                         $title = $card['title'] ?? '';
